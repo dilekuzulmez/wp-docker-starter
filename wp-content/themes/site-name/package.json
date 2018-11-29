@@ -1,0 +1,21 @@
+{
+  "name": "twelve12",
+  "version": "3.9.0",
+  "description": "Twelve12 Development Packages",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "latest",
+    "gulp-rename": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-plumber": "latest",
+    "gulp-notify": "latest",
+    "gulp-sass-lint": "latest",
+    "gulp-sourcemaps": "latest",
+    "run-sequence": "latest"
+  },
+  "keywords": [],
+  "author": "Twelve12",
+  "license": "ISC"
+}

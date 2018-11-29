@@ -1,0 +1,215 @@
+#!/bin/bash
+
+# Get data from .env file
+source .env
+
+## REQUIREMENTS
+# Docker
+# Node JS
+
+
+
+
+# # Confirm the site info
+# read -ep "Domain Name (${DOMAIN}): " domain
+# [ ! -z "$domain" ] && DOMAIN=$domain || echo "Using '${DOMAIN}'"
+
+# read -ep "Website Name (${NAME}): " name
+# [ ! -z "$name" ] && NAME=$name || echo "Using '${NAME}'"
+
+# read -ep "Website Slug (${SLUG}): " slug
+# [ ! -z "$slug" ] && SLUG=$slug || echo "Using '${SLUG}'"
+
+# read -ep "Function Prefix (${PREFIX}): " prefix
+# [ ! -z "$prefix" ] && PREFIX=$prefix || echo "Using '${PREFIX}'"
+
+# read -ep "Website Tagline (${DESC}): " desc
+# [ ! -z "$desc" ] && DESC=$desc || echo "Using '${DESC}'"
+
+
+
+
+# IP CHECK
+COUNTER=2
+while [  $COUNTER -lt 10 ]
+do
+
+	IP="127.0.0.${COUNTER}"
+
+	#response=$(curl --max-time 3 --write-out %{http_code} --silent --output /dev/null ${IP})
+	#echo $response
+
+
+	echo "Checking '${IP}' availability..."
+	if curl --max-time 3 --output /dev/null --silent --head --fail "${IP}"; then
+		echo "${IP} - NOT AVAILABLE" >&2
+	else
+		echo "${IP} - AVAILABLE" >&2
+		break
+	fi
+
+
+	let COUNTER=COUNTER+1
+done
+
+# Update the environment file (.env) with the available IP
+sed -i "" "s/IP=127.0.0.1/IP=${IP}/g" .env;
+echo "DONE: '${IP}' changed as '${IP}' on .env file"
+
+
+# Open that IP slot
+ifconfig lo0 alias $IP up
+echo "DONE: '${IP}' is now available to build server"
+
+
+
+
+## THEME CHANGES
+
+# Theme folder name
+mv wp-content/themes/site-name wp-content/themes/${SLUG}
+echo "DONE: Theme folder name changed as '${SLUG}'"
+
+
+# Theme function prefix changes
+sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/functions.php;
+sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/header.php;
+echo "DONE: Function prefixes changed as '${PREFIX}_'"
+
+
+# Theme info changes
+sed -i "" "s/Site Name/${NAME}/g" wp-content/themes/${SLUG}/style.scss;
+sed -i "" "s/Site tagline/${DESC}/g" wp-content/themes/${SLUG}/style.scss;
+echo "DONE: Theme information updated as '${NAME}'"
+
+
+
+
+# Build the server
+echo "Server is building..."
+docker-compose up -d --build
+
+
+# Add the host to the list
+bash config/etc-hosts.sh -add $DOMAIN $IP
+killall -HUP mDNSResponder
+
+
+
+
+# Install NPM packages
+echo "NPM packages installing..."
+(cd wp-content/themes/${SLUG}/ && npm install --unsafe-perm=true --allow-root && npm install -g gulp-cli --unsafe-perm=true --allow-root && gulp build)
+
+
+# Check MySQL to be ready
+while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
+	echo "Waiting for database connection..."
+	sleep 2
+done
+echo "DONE: MySQL is ready!"
+
+# WP Installation
+function wpcli {
+	command docker-compose run --rm wpcli --allow-root "$@"
+}
+
+wpcli core install --url="http://${DOMAIN}" --title="${NAME}" --admin_user=Twelve12 --admin_email=webdesign@twelve12.com --skip-email
+
+# Update admin info
+wpcli user update Twelve12 --user_url=https://www.twelve12.com --display_name="Bill T." --first_name="Bill" --last_name="T."
+
+# Hide the admin bar
+wpcli user meta update Twelve12 show_admin_bar_front 0
+
+# Hide Welcome panel
+wpcli user meta update Twelve12 show_welcome_panel 0
+wpcli user meta update Twelve12 show_try_gutenberg_panel 0
+
+# Create the developer user
+if [ ${DEVELOPER_EMAIL} != webdesign@twelve12.com ]
+then
+
+	PASSWORD_INFO="$(wpcli user create ${DEVELOPER_NAME} ${DEVELOPER_EMAIL} --user_url=https://www.twelve12.com --display_name="${DEVELOPER_NAME} ${DEVELOPER_LAST_NAME}" --first_name="${DEVELOPER_NAME}" --last_name="${DEVELOPER_LAST_NAME}" --role=administrator)"
+	echo "${PASSWORD_INFO}"
+	ONLY_PASSWORD=${PASSWORD_INFO##*$'\n'}
+
+	wpcli user meta update ${DEVELOPER_NAME} show_admin_bar_front 0
+	wpcli user meta update ${DEVELOPER_NAME} show_welcome_panel 0
+	wpcli user meta update ${DEVELOPER_NAME} show_try_gutenberg_panel 0
+
+else
+
+	DEVELOPER_NAME=Twelve12
+
+fi
+
+# Discourage search engines from indexing this site
+wpcli option set blog_public 0
+
+# Update the tagline
+wpcli option update blogdescription "${DESC}"
+
+# Update the timezone
+wpcli option update timezone_string "America/Los_Angeles"
+
+# Update permalink settings
+wpcli rewrite structure '/%category%/%postname%/'
+
+# Activate our theme
+wpcli theme activate ${SLUG}
+
+# Install our plugins
+wpcli plugin install --activate custom-codes responsivity
+
+# Delete the default posts
+wpcli post delete 1 2 --force
+
+# Change the Blog category
+wpcli term update category 1 --name=Blog --slug=blog
+
+# Add the homepage
+wpcli post create --post_type=page --post_title='Home' --meta_input='{"_wp_page_template":"templates/home-page.php"}' --post_status=publish
+
+# Update the static page
+wpcli option update page_on_front 4
+wpcli option update show_on_front page
+
+# Add the blog page
+wpcli post create --post_type=page --post_title='Blog' --post_status=publish
+
+# Update the static page
+wpcli option update page_on_front 4
+wpcli option update page_for_posts 5
+wpcli option update show_on_front page
+
+
+
+
+# Print the latest site info
+echo ""
+echo ""
+echo "== Site Info ===================="
+
+echo "Admin Page: http://${DOMAIN}/wp-admin"
+echo "Username: ${DEVELOPER_NAME}"
+echo "${ONLY_PASSWORD}"
+
+echo ""
+echo "IP: ${IP}"
+echo ""
+
+echo "NAME: ${NAME}"
+echo "SLUG: ${SLUG}"
+echo "PREFIX: ${PREFIX}"
+echo "DESC: ${DESC}"
+
+echo "================================="
+echo ""
+echo ""
+
+
+
+# RUN THE GULP
+echo "GULP is running..."
+(cd wp-content/themes/${SLUG}/ && npm install --unsafe-perm=true --allow-root && npm install -g gulp-cli --unsafe-perm=true --allow-root && gulp)

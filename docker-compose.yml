@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+  wp:
+    image: wordpress:latest
+    container_name: "${PREFIX}_wp"
+    restart: "always"
+    ports:
+      - ${IP}:80:80
+    volumes:
+      - ./config/php.conf.uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - wp_data:/var/www/html
+      - wp_content:/var/www/html/wp-content/
+      - ./wp-content/:/var/www/html/wp-content/
+      - ./wp-content/themes/:/var/www/html/wp-content/themes/
+      - ./wp-content/plugins/:/var/www/html/wp-content/plugins/
+      - ./wp-content/uploads/:/var/www/html/wp-content/uploads/
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress_data
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: password
+    depends_on:
+      - db
+
+  wpcli:
+    image: wordpress:cli
+    container_name: "${PREFIX}_wpcli"
+    user: root
+    depends_on:
+      - db
+      - wp
+    volumes:
+      - wp_data:/var/www/html
+      - wp_content:/var/www/html/wp-content/
+      - ./wp-content/:/var/www/html/wp-content/
+      - ./wp-content/themes/:/var/www/html/wp-content/themes/
+      - ./wp-content/plugins/:/var/www/html/wp-content/plugins/
+      - ./wp-content/uploads/:/var/www/html/wp-content/uploads/
+
+  db:
+    image: mysql:latest
+    container_name: "${PREFIX}_mysql"
+    restart: "always"
+    ports:
+      - ${IP}:3306:3306
+    command: [
+        '--default_authentication_plugin=mysql_native_password',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci'
+    ]
+    volumes:
+      - ./database/dump:/docker-entrypoint-initdb.d
+      - ./database/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: wordpress_data
+      MYSQL_ROOT_PASSWORD: password
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: "${PREFIX}_phpmyadmin"
+      depends_on:
+          - db
+      ports:
+          - ${IP}:8000:80
+      environment:
+          MYSQL_USER: root
+          MYSQL_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: password
+
+volumes:
+  db_data:
+  wp_data:
+  wp_content:
+networks:
+    default:

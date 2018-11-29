@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Get data from .env file
+source .env
+
+
+
+# Delete the server
+echo "Server is stopping..."
+docker-compose down
+
+
+
+## FILE CHANGES
+
+# Update the environment file (.env)
+sed -i "" "s/IP=${IP}/IP=127.0.0.1/g" .env;
+echo "DONE: '${IP}' reverted on .env file"
+
+
+# Open that IP slot
+ifconfig lo0 alias $IP down
+echo "DONE: '${IP}' is now unavailable to build server"
+
+
+
+# Remove the host to the list
+bash config/etc-hosts.sh -remove $DOMAIN
+killall -HUP mDNSResponder

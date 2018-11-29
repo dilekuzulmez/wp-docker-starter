@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Get data from .env file
+source .env
+
+
+
+
+# Create the developer user
+if [ ${DEVELOPER_EMAIL} == webdesign@twelve12.com ]
+then
+
+	DEVELOPER_NAME=Twelve12
+
+fi
+
+ONLY_PASSWORD="Password: ***********"
+
+
+echo "Starting the server..."
+docker-compose up -d
+
+
+
+
+
+# Print the latest site info
+echo ""
+echo ""
+echo "== Site Info ===================="
+
+echo "Admin Page: http://${DOMAIN}/wp-admin"
+echo "Username: ${DEVELOPER_NAME}"
+echo "${ONLY_PASSWORD}"
+
+echo ""
+echo "IP: ${IP}"
+echo ""
+
+echo "NAME: ${NAME}"
+echo "SLUG: ${SLUG}"
+echo "PREFIX: ${PREFIX}"
+echo "DESC: ${DESC}"
+
+echo "================================="
+echo ""
+echo ""
+
+
+
+# RUN THE GULP
+echo "GULP is running..."
+(cd wp-content/themes/${SLUG}/ && npm install --unsafe-perm=true --allow-root && npm install -g gulp-cli --unsafe-perm=true --allow-root && gulp)
