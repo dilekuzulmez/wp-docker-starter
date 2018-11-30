@@ -4,6 +4,11 @@
 source .env
 
 
+# Colors
+GREEN='\033[1;32m' # Green
+RESET='\033[0m' # No Color
+
+
 
 # Delete the server
 echo "Server is stopping..."
@@ -15,15 +20,16 @@ docker-compose down
 
 # Update the environment file (.env)
 sed -i "" "s/IP=${IP}/IP=127.0.0.1/g" .env;
-echo "DONE: '${IP}' reverted on .env file"
+echo -e "'${IP}' reverted on .env file ... ${GREEN}done${RESET}"
 
 
 # Open that IP slot
 ifconfig lo0 alias $IP down
-echo "DONE: '${IP}' is now unavailable to build server"
+echo -e "'${IP}' is now unavailable to build server ... ${GREEN}done${RESET}"
 
 
 
 # Remove the host to the list
 bash config/etc-hosts.sh -remove $DOMAIN
 killall -HUP mDNSResponder
+echo -e "'${GREEN}DONE${RESET}"

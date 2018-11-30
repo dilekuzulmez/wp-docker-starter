@@ -5,8 +5,11 @@ source .env
 
 ## REQUIREMENTS
 # Docker
-# Node JS
 
+
+# Colors
+GREEN='\033[1;32m' # Green
+RESET='\033[0m' # No Color
 
 
 
@@ -54,12 +57,12 @@ done
 
 # Update the environment file (.env) with the available IP
 sed -i "" "s/IP=127.0.0.1/IP=${IP}/g" .env;
-echo "DONE: '${IP}' changed as '${IP}' on .env file"
+echo -e "'${IP}' changed as '${IP}' on .env file ... ${GREEN}done${RESET}"
 
 
 # Open that IP slot
 ifconfig lo0 alias $IP up
-echo "DONE: '${IP}' is now available to build server"
+echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
 
 
 
@@ -68,19 +71,19 @@ echo "DONE: '${IP}' is now available to build server"
 
 # Theme folder name
 mv wp-content/themes/site-name wp-content/themes/${SLUG}
-echo "DONE: Theme folder name changed as '${SLUG}'"
+echo -e "Theme folder name changed as '${SLUG}' ... ${GREEN}done${RESET}"
 
 
 # Theme function prefix changes
 sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/functions.php;
 sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/header.php;
-echo "DONE: Function prefixes changed as '${PREFIX}_'"
+echo -e "Function prefixes changed as '${PREFIX}_' ... ${GREEN}done${RESET}"
 
 
 # Theme info changes
 sed -i "" "s/Site Name/${NAME}/g" wp-content/themes/${SLUG}/style.scss;
 sed -i "" "s/Site tagline/${DESC}/g" wp-content/themes/${SLUG}/style.scss;
-echo "DONE: Theme information updated as '${NAME}'"
+echo -e "Theme information updated as '${NAME}' ... ${GREEN}done${RESET}"
 
 
 
@@ -103,6 +106,7 @@ killall -HUP mDNSResponder
 # Install NPM packages
 echo "NPM packages installing..."
 docker-compose run --rm nodejs bash -c "npm build"
+echo -e "SCSS file built ... ${GREEN}done${RESET}"
 
 
 # Check MySQL to be ready
@@ -110,7 +114,7 @@ while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password -
 	echo "Waiting for database connection..."
 	sleep 2
 done
-echo "DONE: MySQL is ready!"
+echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
 # WP Installation
 function wpcli {
