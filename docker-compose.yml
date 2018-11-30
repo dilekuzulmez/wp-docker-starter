@@ -5,6 +5,7 @@ services:
     image: wordpress:latest
     container_name: "${PREFIX}_wp"
     restart: "always"
+    user: root
     ports:
       - ${IP}:80:80
     volumes:
