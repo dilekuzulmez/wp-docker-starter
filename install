@@ -105,7 +105,7 @@ killall -HUP mDNSResponder
 
 # Install NPM packages
 echo "NPM packages installing..."
-docker-compose run --rm nodejs bash -c "npm build"
+docker-compose run --no-deps --rm nodejs bash -c "npm run-script build"
 echo -e "SCSS file built ... ${GREEN}done${RESET}"
 
 
@@ -118,7 +118,7 @@ echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
 # WP Installation
 function wpcli {
-	command docker-compose run --rm wpcli --allow-root "$@"
+	command docker-compose run --no-deps --rm wpcli --allow-root "$@"
 }
 
 wpcli core install --url="http://${DOMAIN}" --title="${NAME}" --admin_user=Twelve12 --admin_email=webdesign@twelve12.com --skip-email
