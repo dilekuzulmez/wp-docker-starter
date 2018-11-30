@@ -7,7 +7,6 @@ Wordpress development environment with Docker. Template is being developed with 
 sudo bash install
 ```
 
-
 ### Restarting
 ```bash
 bash start
