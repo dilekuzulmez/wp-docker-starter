@@ -159,8 +159,8 @@ wpcli rewrite structure '/%category%/%postname%/'
 # Activate our theme
 wpcli theme activate ${SLUG}
 
-# Install our plugins
-wpcli plugin install --activate custom-codes responsivity
+# Install our plugins (--activate)
+wpcli plugin install custom-codes responsivity duplicator wp-mail-logging google-analytics-for-wordpress fast-velocity-minify invisible-recaptcha
 
 # Delete the default posts
 wpcli post delete 1 2 --force
