@@ -14,7 +14,7 @@ bash start
 
 ### Stop the server temporarily
 ```bash
-bash bash pause
+bash pause
 ```
 
 ### Removing
