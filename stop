@@ -32,4 +32,4 @@ echo -e "'${IP}' is now unavailable to build server ... ${GREEN}done${RESET}"
 # Remove the host to the list
 bash config/etc-hosts.sh -remove $DOMAIN
 killall -HUP mDNSResponder
-echo -e "'${GREEN}DONE${RESET}"
+echo -e "${GREEN}DONE${RESET}"
