@@ -50,4 +50,4 @@ echo ""
 
 # RUN THE GULP
 echo "GULP is running..."
-(cd wp-content/themes/${SLUG}/ && npm install --unsafe-perm=true --allow-root && npm install -g gulp-cli --unsafe-perm=true --allow-root && gulp)
+docker-compose run --rm nodejs bash -c "npm start"

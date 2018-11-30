@@ -40,6 +40,20 @@ services:
       - ./wp-content/plugins/:/var/www/html/wp-content/plugins/
       - ./wp-content/uploads/:/var/www/html/wp-content/uploads/
 
+  nodejs:
+    image: node:latest
+    container_name: "${PREFIX}_nodejs"
+    user: "root"
+    restart: "on-failure"
+    working_dir: /home/node/app
+    cap_add:
+      - SYS_ADMIN
+    depends_on:
+      - wp
+    volumes:
+      - ./wp-content/themes/${SLUG}/:/home/node/app
+
+
   db:
     image: mysql:latest
     container_name: "${PREFIX}_mysql"

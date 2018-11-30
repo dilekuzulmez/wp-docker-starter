@@ -87,7 +87,10 @@ echo "DONE: Theme information updated as '${NAME}'"
 
 # Build the server
 echo "Server is building..."
-docker-compose up -d --build
+ docker-compose rm &&
+ docker-compose pull &&
+ docker-compose build --no-cache &&
+ docker-compose up -d --force-recreate &&
 
 
 # Add the host to the list
@@ -99,7 +102,7 @@ killall -HUP mDNSResponder
 
 # Install NPM packages
 echo "NPM packages installing..."
-(cd wp-content/themes/${SLUG}/ && npm install --unsafe-perm=true --allow-root && npm install -g gulp-cli --unsafe-perm=true --allow-root && gulp build)
+docker-compose run --rm nodejs bash -c "npm build"
 
 
 # Check MySQL to be ready
@@ -212,4 +215,4 @@ echo ""
 
 # RUN THE GULP
 echo "GULP is running..."
-(cd wp-content/themes/${SLUG}/ && npm install --unsafe-perm=true --allow-root && npm install -g gulp-cli --unsafe-perm=true --allow-root && gulp)
+docker-compose run --rm nodejs bash -c "npm start"
