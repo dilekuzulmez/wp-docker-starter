@@ -166,6 +166,15 @@ wpcli rewrite structure '/%category%/%postname%/'
 # Activate our theme
 wpcli theme activate ${SLUG}
 
+# Delete the other themes
+wpcli theme delete twentyfifteen
+wpcli theme delete twentyseventeen
+wpcli theme delete twentysixteen
+
+# Delete the default plugins
+wpcli plugin delete akismet
+wpcli plugin delete hello
+
 # Install our plugins (--activate)
 wpcli plugin install custom-codes responsivity duplicator wp-mail-logging google-analytics-for-wordpress fast-velocity-minify invisible-recaptcha
 
