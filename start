@@ -50,4 +50,4 @@ echo ""
 
 # RUN THE GULP
 echo "GULP is running..."
-docker-compose run --rm nodejs bash -c "npm start"
+docker-compose run --no-deps --rm nodejs bash -c "npm start"
