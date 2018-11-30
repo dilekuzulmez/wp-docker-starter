@@ -26,6 +26,7 @@ services:
   wpcli:
     image: wordpress:cli
     container_name: "${PREFIX}_wpcli"
+    restart: "on-failure"
     user: root
     depends_on:
       - db
