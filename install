@@ -90,10 +90,11 @@ echo -e "Theme information updated as '${NAME}' ... ${GREEN}done${RESET}"
 
 # Build the server
 echo "Server is building..."
- docker-compose rm &&
- docker-compose pull &&
- docker-compose build --no-cache &&
- docker-compose up -d --force-recreate &&
+docker-compose down
+docker-compose rm &&
+docker-compose pull &&
+docker-compose build --no-cache &&
+docker-compose up -d --force-recreate &&
 
 
 # Add the host to the list

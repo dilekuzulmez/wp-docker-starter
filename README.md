@@ -1,16 +1,78 @@
 # Wordpress Docker Starter with a Clean Template (BETA)
 Wordpress development environment with Docker. Template is being developed with Flexible Grid System. (This documentation will be updated soon) (Only tested on mac)
+	
+
+## Usage
+First, you need to update the **".env"** file with the format as it currently has:
+```bash
+# Site & Starter Template Info
+DOMAIN=dev.sitename.com # Local development domain
+NAME="Site Name" # Site and Theme Name
+DESC="Site tagline" # Site tagline
+SLUG=site-name # Template folder name
+PREFIX=sitename # Function prefixes (sitename_)
+
+
+# Site settings
+TIMEZONE="America/Los_Angeles" # Site timezone
+POST_PERMALINK="/%category%/%postname%/" # Posts permalinks structure
+
+
+# Primary Admin
+ADMIN_USERNAME="Twelve12" # Admin Username
+ADMIN_NAME="Bill" # Admin first name
+ADMIN_LAST_NAME="T." # Admin Last Name
+ADMIN_EMAIL="webdesign@twelve12.com" # Admin email
+ADMIN_URL="https://www.twelve12.com" # Admin URL
+
+
+# Secondary Admin
+DEVELOPER_USERNAME="Cuneyt" # Secondary Admin username
+DEVELOPER_NAME="Cuneyt" # Secondary Admin first name
+DEVELOPER_LAST_NAME="T." # Secondary Admin last name
+DEVELOPER_EMAIL="cuneyt@twelve12.com" # Secondary Admin email
+
+
+# Plugins that needs to be installed
+PLUGINS="custom-codes responsivity duplicator wp-mail-logging google-analytics-for-wordpress fast-velocity-minify invisible-recaptcha"
+
+
+# Don't touch this if you don't know what you are doing!
+IP=127.0.0.1
+
+```
+
+
+### Installation & Start with Gulp
+```bash
+sudo bash install
+```
+
+### Restarting with Gulp
+```bash
+bash start
+```
+
+### Stop the server temporarily
+```bash
+bash pause
+```
+
+### Removing
+```bash
+sudo bash stop
+```
 
 
 ## What does it do?
-### When Installing
+### When Installing *(sudo bash install)*
 1. Finds an available local IP on your computer
 2. Makes that IP available to install Docker servers
 3. Changes the theme folder name with the **"SLUG"** environment variable (from .env file)
 4. Changes the theme function.php function prefixes with the **"PREFIX"** environment variable (from .env file)
 5. Updates the theme information like **"Theme Name"**, **"Theme Description"** with the **"NAME"** and **"DESC"** environment variables (from .env file)
 6. Creates the **Wordpress, MySQL, WP-CLI, PHPMyAdmin and NodeJS(for Gulp)** Docker containers and runs them
-7. Make the development domain name (**"DOMAIN"** environment variable from .env file) available by adding the available IP to **"/etc/hosts"** file
+7. Makes the development domain name (**"DOMAIN"** environment variable from .env file) available by adding the available IP to **"/etc/hosts"** file
 8. Installs the NPM packages in theme folder to build the **"style.css"** file from **"style.scss"** file with Gulp
 9. Does the Wordpress works that's defined in **"wp.sh"** file:
 	* Installs the Wordpress
@@ -37,25 +99,17 @@ Wordpress development environment with Docker. Template is being developed with 
 		* Makes it default static front page
 	* Adds the **"Blog"** page
 		* Makes it default static posts page
-	
 
-## Usage
-### Installation & Start with Gulp
-```bash
-sudo bash install
-```
+### When Starting *(bash start)*
+1. Runs the Docker containers
+2. Runs the Gulp to watch SASS changes
 
-### Restarting
-```bash
-bash start
-```
 
-### Stop the server temporarily
-```bash
-bash pause
-```
+### When pausing *(bash pause)*
+1. Only stops the Docker containers
 
-### Removing
-```bash
-sudo bash stop
-```
+
+### When stopping/removing *(sudo bash stop)*
+1. Stops and removes the Docker containers
+2. Makes the IP unavailable to install Docker servers
+3. Makes the development domain name (**"DOMAIN"** environment variable from .env file) unavailable by removing the IP from **"/etc/hosts"** file
