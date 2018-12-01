@@ -1,6 +1,6 @@
 # Wordpress Docker Starter with a Clean Template (BETA)
 Wordpress development environment with Docker. Template is being developed with Flexible Grid System. (This documentation will be updated soon) (Only tested on mac)
-	
+<br><br>
 
 ## Usage
 First, you need to update the **".env"** file with the format as it currently has:
@@ -62,7 +62,7 @@ bash pause
 ```bash
 sudo bash stop
 ```
-
+<br><br>
 
 ## What does it do?
 ### When Installing *(sudo bash install)*
