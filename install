@@ -69,27 +69,6 @@ echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
 
 
 
-## THEME CHANGES
-
-# Theme folder name
-mv wp-content/themes/site-name wp-content/themes/${SLUG}
-echo -e "Theme folder name changed as '${SLUG}' ... ${GREEN}done${RESET}"
-
-
-# Theme function prefix changes
-sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/functions.php;
-sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/header.php;
-echo -e "Function prefixes changed as '${PREFIX}_' ... ${GREEN}done${RESET}"
-
-
-# Theme info changes
-sed -i "" "s/Site Name/${NAME}/g" wp-content/themes/${SLUG}/style.scss;
-sed -i "" "s/Site tagline/${DESC}/g" wp-content/themes/${SLUG}/style.scss;
-echo -e "Theme information updated as '${NAME}' ... ${GREEN}done${RESET}"
-
-
-
-
 # Build the server
 echo "Server is building..."
 docker-compose rm &&
@@ -98,17 +77,11 @@ docker-compose build --no-cache &&
 docker-compose up -d --force-recreate &&
 
 
-# Add the host to the list
+# Add the host to the /etc/hosts file
 bash config/etc-hosts.sh -add $DOMAIN $IP
 killall -HUP mDNSResponder
 
 
-
-
-# Install NPM packages
-echo "NPM packages installing..."
-docker-compose run --no-deps --rm nodejs bash -c "npm run-script build"
-echo -e "SCSS file built ... ${GREEN}done${RESET}"
 
 
 # Check MySQL to be ready
@@ -118,36 +91,87 @@ while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password -
 done
 echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
-# Do the Wordpress Works
-bash wp.sh
+
+
+
+## STARTER TEMPLATE
+if [ -d wp-content/themes/site-name ]; then
+
+
+	## THEME CHANGES
+
+	# Theme folder name
+	mv ./wp-content/themes/site-name ./wp-content/themes/${SLUG}
+	echo -e "Theme folder name changed as '${SLUG}' ... ${GREEN}done${RESET}"
+
+
+	# Theme function prefix changes
+	sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/functions.php;
+	sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/header.php;
+	echo -e "Function prefixes changed as '${PREFIX}_' ... ${GREEN}done${RESET}"
+
+
+	# Theme info changes
+	sed -i "" "s/Site Name/${NAME}/g" wp-content/themes/${SLUG}/style.scss;
+	sed -i "" "s/Site tagline/${DESC}/g" wp-content/themes/${SLUG}/style.scss;
+	echo -e "Theme information updated as '${NAME}' ... ${GREEN}done${RESET}"
+
+
+	# Install NPM packages
+	echo "NPM packages installing..."
+	docker-compose run --no-deps --rm nodejs bash -c "npm run-script build"
+	echo -e "SCSS file built ... ${GREEN}done${RESET}"
+
+
+	# WORDPRESS WORKS
+	bash wp.sh
+	source wp.sh
 
 
 
 
-# Print the latest site info
-echo ""
-echo ""
-echo "== Site Info ===================="
+	# Print the latest site info
+	echo ""
+	echo ""
+	echo "== Site Info ===================="
 
-echo "Admin Page: http://${DOMAIN}/wp-admin"
-echo "Username: ${DEVELOPER_NAME}"
-echo "${ONLY_PASSWORD}"
+	echo "Admin Page: http://${DOMAIN}/wp-admin"
+	echo "Username: ${DEVELOPER_USERNAME}"
+	echo "${ONLY_PASSWORD}"
 
-echo ""
-echo "IP: ${IP}"
-echo ""
+	echo ""
+	echo "IP: ${IP}"
+	echo ""
 
-echo "NAME: ${NAME}"
-echo "SLUG: ${SLUG}"
-echo "PREFIX: ${PREFIX}"
-echo "DESC: ${DESC}"
+	echo "NAME: ${NAME}"
+	echo "SLUG: ${SLUG}"
+	echo "PREFIX: ${PREFIX}"
+	echo "DESC: ${DESC}"
 
-echo "================================="
-echo ""
-echo ""
+	echo "================================="
+	echo ""
+	echo ""
 
 
+	# RUN THE GULP
+	echo "GULP is running..."
+	docker-compose run --rm nodejs bash -c "npm start"
 
-# RUN THE GULP
-echo "GULP is running..."
-docker-compose run --rm nodejs bash -c "npm start"
+
+else
+
+
+	# Print the latest site info
+	echo ""
+	echo ""
+	echo "== Site Info ===================="
+
+	echo "Admin Page: http://${DOMAIN}/wp-admin"
+	echo "IP: ${IP}"
+
+	echo "================================="
+	echo ""
+	echo ""
+
+
+fi

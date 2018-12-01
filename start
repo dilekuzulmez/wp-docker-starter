@@ -7,21 +7,12 @@ source .env
 
 
 # Create the developer user
-if [ ${DEVELOPER_EMAIL} == webdesign@twelve12.com ]
+if [ ${DEVELOPER_EMAIL} != ${ADMIN_EMAIL} ] && [ ${DEVELOPER_EMAIL} != "" ]
 then
 
-	DEVELOPER_NAME=Twelve12
+	DEVELOPER_NAME=${ADMIN_USERNAME}
 
 fi
-
-ONLY_PASSWORD="Password: ***********"
-
-
-echo "Starting the server..."
-docker-compose up -d
-
-
-
 
 
 # Print the latest site info
@@ -31,7 +22,7 @@ echo "== Site Info ===================="
 
 echo "Admin Page: http://${DOMAIN}/wp-admin"
 echo "Username: ${DEVELOPER_NAME}"
-echo "${ONLY_PASSWORD}"
+echo "Password: ***********"
 
 echo ""
 echo "IP: ${IP}"
@@ -46,6 +37,12 @@ echo "================================="
 echo ""
 echo ""
 
+
+
+
+# Start the docker containers
+echo "Starting the server..."
+docker-compose up -d
 
 
 # RUN THE GULP
