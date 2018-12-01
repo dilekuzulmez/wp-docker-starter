@@ -101,7 +101,7 @@ if [ -d wp-content/themes/site-name ]; then
 	## THEME CHANGES
 
 	# Theme folder name
-	mv ./wp-content/themes/site-name ./wp-content/themes/${SLUG}
+	(cd wp-content/themes/ && mv site-name ${SLUG})
 	echo -e "Theme folder name changed as '${SLUG}' ... ${GREEN}done${RESET}"
 
 
