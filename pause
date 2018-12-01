@@ -3,4 +3,4 @@
 
 # Stop the server
 echo "Server is stopping..."
-docker-compose down
+docker-compose stop
