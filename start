@@ -4,6 +4,14 @@
 source .env
 
 
+# Install if not already
+if [ $IP==127.0.0.1 ]; then
+
+	bash install
+	exit
+
+fi
+
 
 
 # Create the developer user

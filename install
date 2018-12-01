@@ -69,12 +69,43 @@ echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
 
 
 
+## STARTER TEMPLATE
+FROM_STARTER=no
+if [ -d "wp-content/themes/site-name" ]; then
+
+	FROM_STARTER=yes
+
+
+	## THEME CHANGES
+
+	# Theme folder name
+	mv "wp-content/themes/site-name" "wp-content/themes/${SLUG}"
+	echo -e "Theme folder name changed as '${SLUG}' ... ${GREEN}done${RESET}"
+
+
+	# Theme function prefix changes
+	sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/functions.php;
+	sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/header.php;
+	echo -e "Function prefixes changed as '${PREFIX}_' ... ${GREEN}done${RESET}"
+
+
+	# Theme info changes
+	sed -i "" "s/Site Name/${NAME}/g" wp-content/themes/${SLUG}/style.scss;
+	sed -i "" "s/Site tagline/${DESC}/g" wp-content/themes/${SLUG}/style.scss;
+	echo -e "Theme information updated as '${NAME}' ... ${GREEN}done${RESET}"
+
+
+fi
+
+
+
+
 # Build the server
 echo "Server is building..."
 docker-compose rm &&
 docker-compose pull &&
 docker-compose build --no-cache &&
-docker-compose up -d --force-recreate &&
+docker-compose up -d --force-recreate
 
 
 # Add the host to the /etc/hosts file
@@ -95,28 +126,7 @@ echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
 
 ## STARTER TEMPLATE
-STARTER=wp-content/themes/site-name
-STARTER_NEW=wp-content/themes/${SLUG}
-if [ -d ${STARTER} ]; then
-
-
-	## THEME CHANGES
-
-	# Theme folder name
-	mv ${STARTER} ${STARTER_NEW}
-	echo -e "Theme folder name changed as '${SLUG}' ... ${GREEN}done${RESET}"
-
-
-	# Theme function prefix changes
-	sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/functions.php;
-	sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/header.php;
-	echo -e "Function prefixes changed as '${PREFIX}_' ... ${GREEN}done${RESET}"
-
-
-	# Theme info changes
-	sed -i "" "s/Site Name/${NAME}/g" wp-content/themes/${SLUG}/style.scss;
-	sed -i "" "s/Site tagline/${DESC}/g" wp-content/themes/${SLUG}/style.scss;
-	echo -e "Theme information updated as '${NAME}' ... ${GREEN}done${RESET}"
+if [ $FROM_STARTER==yes ]; then
 
 
 	# Install NPM packages
