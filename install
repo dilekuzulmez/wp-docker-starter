@@ -87,7 +87,7 @@ killall -HUP mDNSResponder
 # Check MySQL to be ready
 while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
 	echo "Waiting for database connection..."
-	sleep 2
+	sleep 3
 done
 echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
@@ -95,13 +95,15 @@ echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
 
 ## STARTER TEMPLATE
-if [ -d wp-content/themes/site-name ]; then
+STARTER=wp-content/themes/site-name
+STARTER_NEW=wp-content/themes/${SLUG}
+if [ -d ${STARTER} ]; then
 
 
 	## THEME CHANGES
 
 	# Theme folder name
-	(cd wp-content/themes/ && mv site-name ${SLUG})
+	mv ${STARTER} ${STARTER_NEW}
 	echo -e "Theme folder name changed as '${SLUG}' ... ${GREEN}done${RESET}"
 
 
