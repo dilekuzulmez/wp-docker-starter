@@ -30,6 +30,8 @@ RESET='\033[0m' # No Color
 # [ ! -z "$desc" ] && DESC=$desc || echo "Using '${DESC}'"
 
 
+# Stop first
+bash stop
 
 
 # IP CHECK
@@ -90,7 +92,6 @@ echo -e "Theme information updated as '${NAME}' ... ${GREEN}done${RESET}"
 
 # Build the server
 echo "Server is building..."
-docker-compose down
 docker-compose rm &&
 docker-compose pull &&
 docker-compose build --no-cache &&
