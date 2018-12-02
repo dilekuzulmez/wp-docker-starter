@@ -64,6 +64,7 @@ if [ $IP != 127.0.0.1 ]; then
 fi
 
 
+echo "INSTALLATION MODE: $MODE"
 
 
 # # CONFIRM THE SITE INFO ???
