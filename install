@@ -90,7 +90,7 @@ echo "INSTALLATION MODE: $MODE"
 if [ $MODE == already-installed ]; then
 
 	# Force re-install
-	if [ $1 == --f ]; then
+	if [[ $1 == --f ]]; then
 
 		# Stop first
 		bash stop
