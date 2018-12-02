@@ -64,10 +64,6 @@ if [ $IP != 127.0.0.1 ]; then
 fi
 
 
-echo "MODE: $MODE $1"
-exit
-
-
 
 
 # # CONFIRM THE SITE INFO ???
