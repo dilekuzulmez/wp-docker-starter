@@ -213,7 +213,6 @@ fi
 if [ $MODE == install-starter ] || [ $MODE == install-different-theme ]; then
 
 
-	bash wp.sh
 	source wp.sh
 
 
