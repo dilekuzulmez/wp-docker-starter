@@ -17,6 +17,13 @@ fi
 
 
 
+# Open that IP slot
+ifconfig lo0 alias $IP up
+echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
+
+
+
+
 # Start the docker containers
 echo "Starting the server..."
 docker-compose up -d
