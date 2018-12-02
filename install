@@ -12,8 +12,65 @@ GREEN='\033[1;32m' # Green
 RESET='\033[0m' # No Color
 
 
+# CHECK THE PROJECT STATUS
 
-# # Confirm the site info
+# Default
+MODE=install-starter
+# 1. Check IP and Create Host *
+# 2. Prepare the starter template *
+# 3. Build the server *
+# 4. Install the NPM packages and build the style.css file *
+# 5. Do the WP job *
+# 6. Print the site info *
+# 7. Print the Username & Pass *
+# 8. Run the GULP *
+
+
+# If the starter theme doesn't exist
+if [ ! -d wp-content/themes/site-name ]; then
+
+	MODE=install-different-theme
+	# 1. Check IP and Create Host*
+	# 2. Build the server *
+	# 3. Do the WP job *
+	# 4. Print the site info *
+	# 5. Print the Username & Pass *
+
+fi
+
+
+# If DB dump exists
+if [ -f database/dump/*.sql ]; then
+
+	MODE=install-existing-site
+	# 1. Check IP and Create Host *
+	# 2. Build the server *
+	# 3. URL replace on DB !!! Coming soon
+	# 4. Print the site info *
+
+fi
+
+
+# If local IP changed on .env file
+if [ $IP != 127.0.0.1 ]; then
+
+	MODE=already-installed
+	# 1. Start the servers
+
+	# If forced re-install:
+	# 1. Stop and remove the current local server and domain
+	# 2. Restart the installation
+
+fi
+
+
+echo "MODE: $MODE $1"
+exit
+
+
+
+
+# # CONFIRM THE SITE INFO ???
 # read -ep "Domain Name (${DOMAIN}): " domain
 # [ ! -z "$domain" ] && DOMAIN=$domain || echo "Using '${DOMAIN}'"
 
@@ -30,19 +87,40 @@ RESET='\033[0m' # No Color
 # [ ! -z "$desc" ] && DESC=$desc || echo "Using '${DESC}'"
 
 
-# Stop first
-bash stop
 
 
-# IP CHECK
+# IF ALREADY INSTALLED
+if [ $MODE == already-installed ]; then
+
+	# Force re-install
+	if [ $1 == --f ]; then
+
+		# Stop first
+		bash stop
+
+		# Restart Installation
+		bash install
+		exit
+
+	fi
+
+
+	# Start the server
+	bash start
+	exit
+
+fi
+
+
+
+
+# CHECK IP AND CREATE HOST
+echo "Checking IP availability..."
 COUNTER=2
 while [  $COUNTER -lt 10 ]
 do
 
 	IP="127.0.0.${COUNTER}"
-
-	#response=$(curl --max-time 3 --write-out %{http_code} --silent --output /dev/null ${IP})
-	#echo $response
 
 
 	echo "Checking '${IP}' availability..."
@@ -69,14 +147,9 @@ echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
 
 
 
-## STARTER TEMPLATE
-FROM_STARTER=no
-if [ -d "wp-content/themes/site-name" ]; then
+# PREPARE THE STARTER TEMPLATE
+if [ $MODE == install-starter ]; then
 
-	FROM_STARTER=yes
-
-
-	## THEME CHANGES
 
 	# Theme folder name
 	mv "wp-content/themes/site-name" "wp-content/themes/${SLUG}"
@@ -100,7 +173,8 @@ fi
 
 
 
-# Build the server
+
+# BUILD THE SERVER
 echo "Server is building..."
 docker-compose rm &&
 docker-compose pull &&
@@ -113,8 +187,6 @@ bash config/etc-hosts.sh -add $DOMAIN $IP
 killall -HUP mDNSResponder
 
 
-
-
 # Check MySQL to be ready
 while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
 	echo "Waiting for database connection..."
@@ -125,8 +197,8 @@ echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
 
 
-## STARTER TEMPLATE
-if [ $FROM_STARTER==yes ]; then
+# INSTALL NPM PACKAGES AND BUILD THE "style.css" FILE
+if [ $MODE == install-starter ]; then
 
 
 	# Install NPM packages
@@ -135,55 +207,53 @@ if [ $FROM_STARTER==yes ]; then
 	echo -e "SCSS file built ... ${GREEN}done${RESET}"
 
 
-	# WORDPRESS WORKS
+fi
+
+
+
+
+# DO THE WP WORKS
+if [ $MODE == install-starter ] || [ $MODE == install-different-theme ]; then
+
+
 	bash wp.sh
 	source wp.sh
 
 
+fi
 
 
-	# Print the latest site info
-	echo ""
-	echo ""
-	echo "== Site Info ===================="
 
-	echo "Admin Page: http://${DOMAIN}/wp-admin"
+
+# PRINT THE SITE INFO
+echo ""
+echo ""
+echo "== Site Info ===================="
+echo ""
+echo "Admin Page: http://${DOMAIN}/wp-admin"
+
+if [ $MODE == install-starter ] || [ $MODE == install-different-theme ]; then
+
 	echo "Username: ${DEVELOPER_USERNAME}"
 	echo "${ONLY_PASSWORD}"
 
-	echo ""
-	echo "IP: ${IP}"
-	echo ""
+fi
 
-	echo "NAME: ${NAME}"
-	echo "SLUG: ${SLUG}"
-	echo "PREFIX: ${PREFIX}"
-	echo "DESC: ${DESC}"
-
-	echo "================================="
-	echo ""
-	echo ""
+echo "IP: ${IP}"
+echo ""
+echo "================================="
+echo ""
+echo ""
 
 
-	# RUN THE GULP
+
+
+# RUN THE GULP
+if [ $MODE == install-starter ]; then
+
+
 	echo "GULP is running..."
 	docker-compose run --rm nodejs bash -c "npm start"
-
-
-else
-
-
-	# Print the latest site info
-	echo ""
-	echo ""
-	echo "== Site Info ===================="
-
-	echo "Admin Page: http://${DOMAIN}/wp-admin"
-	echo "IP: ${IP}"
-
-	echo "================================="
-	echo ""
-	echo ""
 
 
 fi
