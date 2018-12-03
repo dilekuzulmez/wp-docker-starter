@@ -5,31 +5,44 @@ Wordpress development environment with Docker. Template is being developed with 
 ## Usage
 First, you need to update the **".env"** file with the format as it currently has:
 ```bash
-# SITE & STARTER TEMPLATE INFO
+# SITE INFO
 
 ## Local development domain
 DOMAIN=dev.sitename.com
 
-## Site and Theme Name
+
+# IF YOU ARE IMPORTING AN EXISTING SITE (STRING REPLACE COMING SOON)
+# 1. Add your DB .sql file to the "/database/dump/" folder
+# 2. Replace the existing "/wp-content/" folder with your "/wp-content/" folder
+# 3. Uncomment the line below and write the old domain name
+# OLD_DOMAIN="https://www.example.com"
+
+
+
+# IF YOU WANT TO START FROM SCRATCH, FILL THE INFO BELOW
+
+## Active theme folder name
+SLUG=site-name
+
+## Site Name
 NAME="Site Name"
 
 ## Site tagline
 DESC="Site tagline"
 
-## Template folder name
-SLUG=site-name
-
 ## Function prefixes (sitename_)
 PREFIX=sitename
+
 
 
 # SITE SETTINGS
 
 ## Site timezone
-TIMEZONE="America/Los_Angeles" 
+TIMEZONE="America/Los_Angeles"
 
 ## Posts permalinks structure
 POST_PERMALINK="/%category%/%postname%/"
+
 
 
 # PRIMARY ADMIN
@@ -50,6 +63,7 @@ ADMIN_EMAIL="webdesign@twelve12.com"
 ADMIN_URL="https://www.twelve12.com"
 
 
+
 # SECONDARY ADMIN
 
 ## Secondary Admin username
@@ -65,14 +79,13 @@ DEVELOPER_LAST_NAME="T."
 DEVELOPER_EMAIL="cuneyt@twelve12.com"
 
 
+
 # Plugins that needs to be installed
-PLUGINS="custom-codes responsivity duplicator wp-mail-logging google-analytics-for-wordpress fast-velocity-minify invisible-recaptcha"
+PLUGINS="custom-codes responsivity simplest-under-construction admin-menu-restriction duplicator wp-mail-logging google-analytics-for-wordpress fast-velocity-minify invisible-recaptcha"
 
 
 # Don't touch this if you don't know what you are doing!
 IP=127.0.0.1
-
-
 ```
 
 

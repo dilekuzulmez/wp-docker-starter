@@ -37,7 +37,7 @@ if [ -f wp-content/themes/${SLUG}/gulpfile.js ] && [ -f wp-content/themes/${SLUG
 
 	# RUN THE GULP
 	echo "GULP is running..."
-	docker-compose run --no-deps --rm nodejs bash -c "npm start"
+	docker-compose run --no-deps --rm gulp bash -c "npm start"
 
 
 fi

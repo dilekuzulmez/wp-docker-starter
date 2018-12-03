@@ -201,7 +201,7 @@ if [ $MODE == install-starter ]; then
 
 	# Install NPM packages
 	echo "NPM packages installing..."
-	docker-compose run --no-deps --rm nodejs bash -c "npm run-script build"
+	docker-compose run --no-deps --rm gulp bash -c "npm run-script build"
 	echo -e "SCSS file built ... ${GREEN}done${RESET}"
 
 
@@ -250,7 +250,7 @@ if [ $MODE == install-starter ]; then
 
 
 	echo "GULP is running..."
-	docker-compose run --rm nodejs bash -c "npm start"
+	docker-compose run --rm gulp bash -c "npm start"
 
 
 fi
