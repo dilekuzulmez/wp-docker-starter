@@ -176,7 +176,7 @@ read -ep "Are these correct? (type 'yes' to confirm): " confirm
 
 
 # CHANGE THE FILE IF YES
-if [[ $confirm == yes ]]; then
+if [[ $confirm == yes ]] || [[ $confirm == y ]]; then
 
 	# Create the .env file
 	cp local.env .env
