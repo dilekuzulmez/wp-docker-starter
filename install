@@ -27,7 +27,7 @@ MODE=install-starter
 
 
 # If the starter theme doesn't exist
-if [ ! -d wp-content/themes/site-name ]; then
+if [ -d wp-content/themes/* ]; then
 
 	MODE=install-different-theme
 	# 1. Check IP and Create Host*
@@ -148,9 +148,9 @@ echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
 if [ $MODE == install-starter ]; then
 
 
-	# Theme folder name
-	mv "wp-content/themes/site-name" "wp-content/themes/${SLUG}"
-	echo -e "Theme folder name changed as '${SLUG}' ... ${GREEN}done${RESET}"
+	# Download the template
+	git clone https://twelve12com@bitbucket.org/twelve12com/new-wordpress-theme-template.git wp-content/themes/${SLUG}/
+	exit
 
 
 	# Theme function prefix changes
