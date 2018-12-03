@@ -170,7 +170,7 @@ if [ ! -f .env ]; then
 
 		# Update the .env file
 		sed -i "" "s/DOMAIN=dev.sitename.com/DOMAIN=$DOMAIN/g" .env;
-		sed -i "" "s/https:\/\/www.example.com/$OLD_DOMAIN/g" .env;
+		sed -i "" "s#https://www.example.com#$OLD_DOMAIN#g" .env;
 		sed -i "" "s/SLUG=site-name/SLUG=$SLUG/g" .env;
 		sed -i "" "s/Site Name/$NAME/g" .env;
 		sed -i "" "s/Site tagline/$DESC/g" .env;
