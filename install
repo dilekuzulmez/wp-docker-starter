@@ -161,7 +161,7 @@ if [ ! -f .env ]; then
 
 
 	# Confirmation
-	if [ $confirm == yes ]; then
+	if [[ $confirm == yes ]]; then
 
 		# Create the .env file
 		cp local.env .env
