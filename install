@@ -142,51 +142,53 @@ if [[ ! -f .env ]]; then
 	fi
 
 
-	# Confirm the information
-	echo ""
-	echo ""
-	echo "== Information Entered ============"
-	echo ""
-	echo "Local development domain: $DOMAIN"
-	[[ $MODE == install-existing-site ]] && echo "Old full website URL: $OLD_DOMAIN" || sleep 0
-	echo "Active theme folder name: $SLUG"
-	echo "Website Name: $NAME"
-	echo "Website Tagline: $DESC"
-	[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
-	echo ""
-	echo "==================================="
-	echo ""
-	echo ""
-	read -ep "Are these correct? (type 'yes' to confirm): " confirm
+fi
 
 
-	# Confirmation
-	if [[ $confirm == yes ]]; then
-
-		# Create the .env file
-		cp local.env .env
-		echo -e ".env file created ... ${GREEN}done${RESET}"
 
 
-		# Update the .env file
-		sed -i "" "s/DOMAIN=dev.sitename.com/DOMAIN=$DOMAIN/g" .env;
-		sed -i "" "s#https://www.example.com#$OLD_DOMAIN#g" .env;
-		sed -i "" "s/SLUG=site-name/SLUG=$SLUG/g" .env;
-		sed -i "" "s/Site Name/$NAME/g" .env;
-		sed -i "" "s/Site tagline/$DESC/g" .env;
-		sed -i "" "s/PREFIX=sitename/PREFIX=$PREFIX/g" .env;
-		echo -e ".env file updated with the new info ... ${GREEN}done${RESET}"
+# Confirm the information
+echo ""
+echo ""
+echo "== Information Entered ============"
+echo ""
+echo "Local development domain: $DOMAIN"
+[[ $MODE == install-existing-site ]] && echo "Old full website URL: $OLD_DOMAIN" || sleep 0
+echo "Active theme folder name: $SLUG"
+echo "Website Name: $NAME"
+echo "Website Tagline: $DESC"
+[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
+echo ""
+echo "==================================="
+echo ""
+echo ""
+read -ep "Are these correct? (type 'yes' to confirm): " confirm
 
 
-		# Get data from .env file
-		source .env
+# Confirmation
+if [[ $confirm == yes ]]; then
 
-	else
+	# Create the .env file
+	cp local.env .env
+	echo -e ".env file created ... ${GREEN}done${RESET}"
 
-		exit
 
-	fi
+	# Update the .env file
+	sed -i "" "s/DOMAIN=dev.sitename.com/DOMAIN=$DOMAIN/g" .env;
+	sed -i "" "s#https://www.example.com#$OLD_DOMAIN#g" .env;
+	sed -i "" "s/SLUG=site-name/SLUG=$SLUG/g" .env;
+	sed -i "" "s/Site Name/$NAME/g" .env;
+	sed -i "" "s/Site tagline/$DESC/g" .env;
+	sed -i "" "s/PREFIX=sitename/PREFIX=$PREFIX/g" .env;
+	echo -e ".env file updated with the new info ... ${GREEN}done${RESET}"
 
+
+	# Get data from .env file
+	source .env
+
+else
+
+	exit
 
 fi
 
