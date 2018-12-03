@@ -160,9 +160,11 @@ echo "== Information Entered ============"
 echo ""
 echo "Local development domain: $DOMAIN"
 [[ $MODE == install-existing-site ]] && echo "Old full website URL: $OLD_DOMAIN" || sleep 0
-echo "Active theme folder name: $SLUG"
-echo "Website Name: $NAME"
-echo "Website Tagline: $DESC"
+if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; then
+	echo "Active theme folder name: $SLUG"
+	echo "Website Name: $NAME"
+	echo "Website Tagline: $DESC"
+fi
 [[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
 echo ""
 echo "==================================="
