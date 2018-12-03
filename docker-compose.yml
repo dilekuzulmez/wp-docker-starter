@@ -54,6 +54,8 @@ services:
       - SYS_ADMIN
     volumes:
       - ./wp-content/themes/${SLUG}/:/home/node/app
+      - ./wp-content/themes/${SLUG}/node_modules/:/home/node/app/node_modules/
+      - ./wp-content/themes/${SLUG}/package-lock.json:/home/node/app/package-lock.json
 
 
   db:
