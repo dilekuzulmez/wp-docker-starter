@@ -31,6 +31,13 @@ docker-compose up -d
 
 
 
-# RUN THE GULP
-echo "GULP is running..."
-docker-compose run --no-deps --rm nodejs bash -c "npm start"
+# If Gulp file and package.json exist in theme folder
+if [ -f wp-content/themes/${SLUG}/gulpfile.js ] && [ -f wp-content/themes/${SLUG}/package.json ]; then
+
+
+	# RUN THE GULP
+	echo "GULP is running..."
+	docker-compose run --no-deps --rm nodejs bash -c "npm start"
+
+
+fi
