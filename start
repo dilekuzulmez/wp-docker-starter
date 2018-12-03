@@ -7,7 +7,7 @@ source .env
 
 
 # Install if not already
-if [ $IP == 127.0.0.1 ] || [ ! -f .env ]; then
+if [[ $IP == 127.0.0.1 ]] || [[ ! -f .env ]]; then
 
 	bash install
 	exit
@@ -32,7 +32,7 @@ docker-compose up -d
 
 
 # If Gulp file and package.json exist in theme folder
-if [ -f wp-content/themes/${SLUG}/gulpfile.js ] && [ -f wp-content/themes/${SLUG}/package.json ]; then
+if [[ -f wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f wp-content/themes/${SLUG}/package.json ]]; then
 
 
 	# RUN THE GULP

@@ -20,7 +20,7 @@ wp user meta update ${ADMIN_USERNAME} show_welcome_panel 0
 wp user meta update ${ADMIN_USERNAME} show_try_gutenberg_panel 0
 
 # Create the developer user
-if [ ${DEVELOPER_EMAIL} != ${ADMIN_EMAIL} ] && [ ${DEVELOPER_EMAIL} != "" ]
+if [[ ${DEVELOPER_EMAIL} != ${ADMIN_EMAIL} ]] && [[ ${DEVELOPER_EMAIL} != "" ]]
 then
 
 	PASSWORD_INFO="$(wp user create ${DEVELOPER_USERNAME} ${DEVELOPER_EMAIL} --user_url=${ADMIN_URL} --display_name="${DEVELOPER_NAME} ${DEVELOPER_LAST_NAME}" --first_name="${DEVELOPER_NAME}" --last_name="${DEVELOPER_LAST_NAME}" --role=administrator)"

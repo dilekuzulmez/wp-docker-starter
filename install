@@ -24,7 +24,7 @@ MODE=install-starter
 
 
 # If there is no theme in the themes folder
-if [ -d wp-content/themes/* ]; then
+if [[ -d wp-content/themes/* ]]; then
 
 	MODE=install-different-theme
 	# 1. Check IP and Create Host*
@@ -37,7 +37,7 @@ fi
 
 
 # If DB dump or MySQL files exist
-if [ -f database/dump/*.sql ] || [ -d database/mysql/ ]; then
+if [[ -f database/dump/*.sql ]] || [[ -d database/mysql/ ]]; then
 
 	MODE=install-existing-site
 	# 1. Check IP and Create Host *
@@ -49,7 +49,7 @@ fi
 
 
 # If local IP already changed on .env file
-if [ $IP != 127.0.0.1 ]; then
+if [[ $IP != 127.0.0.1 ]]; then
 
 	MODE=already-installed
 	# 1. Start the servers
@@ -68,7 +68,7 @@ echo ""
 
 
 # IF ALREADY INSTALLED
-if [ $MODE == already-installed ]; then
+if [[ $MODE == already-installed ]]; then
 
 	# Force re-install
 	if [[ $1 == --f ]]; then
@@ -94,49 +94,49 @@ fi
 
 # CONFIRM THE SITE INFO
 # Confirm the environment information if .env file not exists
-if [ ! -f .env ]; then
+if [[ ! -f .env ]]; then
 
 
 	# Get local domain info
 	read -ep "Domain Name (${DOMAIN}): " domain
-	[ ! -z "$domain" ] && DOMAIN=$domain || echo "Using '${DOMAIN}'"
+	[[ ! -z "$domain" ]] && DOMAIN=$domain || echo "Using '${DOMAIN}'"
 
 
 	# If importing existing website
-	if [ $MODE == install-existing-site ]; then
+	if [[ $MODE == install-existing-site ]]; then
 
 		# Get local domain info
 		read -ep "Old full website URL (${OLD_DOMAIN}): " old_domain
-		[ ! -z "$old_domain" ] && OLD_DOMAIN=$old_domain || read -ep "Old full website URL (${OLD_DOMAIN}): " old_domain
+		[[ ! -z "$old_domain" ]] && OLD_DOMAIN=$old_domain || read -ep "Old full website URL (${OLD_DOMAIN}): " old_domain
 
 	fi
 
 
 	# When creating website from scratch
-	if [ $MODE == install-starter ] || [ $MODE == install-different-theme ]; then
+	if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; then
 
 
 		read -ep "Active theme folder name (${SLUG}): " slug
-		[ ! -z "$slug" ] && SLUG=$slug || echo "Using '${SLUG}'"
+		[[ ! -z "$slug" ]] && SLUG=$slug || echo "Using '${SLUG}'"
 
 
 		read -ep "Website Name (${NAME}): " name
-		[ ! -z "$name" ] && NAME=$name || echo "Using '${NAME}'"
+		[[ ! -z "$name" ]] && NAME=$name || echo "Using '${NAME}'"
 
 
 		read -ep "Website Tagline (${DESC}): " desc
-		[ ! -z "$desc" ] && DESC=$desc || echo "Using '${DESC}'"
+		[[ ! -z "$desc" ]] && DESC=$desc || echo "Using '${DESC}'"
 
 
 	fi
 
 
 	# When using our starter theme
-	if [ $MODE == install-starter ]; then
+	if [[ $MODE == install-starter ]]; then
 
 
 		read -ep "Function Prefixes (${PREFIX}): " prefix
-		[ ! -z "$prefix" ] && PREFIX=$prefix || echo "Using '${PREFIX}'"
+		[[ ! -z "$prefix" ]] && PREFIX=$prefix || echo "Using '${PREFIX}'"
 
 
 	fi
@@ -148,11 +148,11 @@ if [ ! -f .env ]; then
 	echo "== Information Entered ============"
 	echo ""
 	echo "Local development domain: $DOMAIN"
-	[ $MODE == install-existing-site ] && echo "Old full website URL: $OLD_DOMAIN" || sleep 0
+	[[ $MODE == install-existing-site ]] && echo "Old full website URL: $OLD_DOMAIN" || sleep 0
 	echo "Active theme folder name: $SLUG"
 	echo "Website Name: $NAME"
 	echo "Website Tagline: $DESC"
-	[ $MODE == install-starter ] && echo "Function Prefixes: $PREFIX" || sleep 0
+	[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
 	echo ""
 	echo "==================================="
 	echo ""
@@ -196,8 +196,7 @@ fi
 # CHECK IP AND CREATE HOST
 echo "Checking IP availability..."
 COUNTER=2
-while [  $COUNTER -lt 10 ]
-do
+while [[ $COUNTER -lt 10 ]]; do
 
 	IP="127.0.0.${COUNTER}"
 
@@ -228,7 +227,7 @@ echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
 
 
 # PREPARE THE STARTER TEMPLATE
-if [ $MODE == install-starter ]; then
+if [[ $MODE == install-starter ]]; then
 
 
 	# Download the template
@@ -282,7 +281,7 @@ echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
 
 # INSTALL NPM PACKAGES AND BUILD THE "style.css" FILE
-if [ $MODE == install-starter ]; then
+if [[ $MODE == install-starter ]]; then
 
 
 	# Install NPM packages
@@ -297,7 +296,7 @@ fi
 
 
 # DO THE WP WORKS
-if [ $MODE == install-starter ] || [ $MODE == install-different-theme ]; then
+if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; then
 
 
 	source wp.sh
@@ -315,7 +314,7 @@ echo "== Site Info ===================="
 echo ""
 echo "Admin Page: http://${DOMAIN}/wp-admin"
 
-if [ $MODE == install-starter ] || [ $MODE == install-different-theme ]; then
+if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; then
 
 	echo "Username: ${DEVELOPER_USERNAME}"
 	echo "${ONLY_PASSWORD}"
@@ -332,7 +331,7 @@ echo ""
 
 
 # RUN THE GULP
-if [ $MODE == install-starter ]; then
+if [[ $MODE == install-starter ]]; then
 
 
 	echo "GULP is running..."
