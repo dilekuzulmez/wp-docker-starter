@@ -173,7 +173,9 @@ echo ""
 read -ep "Are these correct? (type 'yes' to confirm): " confirm
 
 
-# Confirmation
+
+
+# CHANGE THE FILE IF YES
 if [[ $confirm == yes ]]; then
 
 	# Create the .env file
@@ -183,7 +185,7 @@ if [[ $confirm == yes ]]; then
 
 	# Update the .env file
 	sed -i "" "s/DOMAIN=dev.sitename.com/DOMAIN=$DOMAIN/g" .env;
-	sed -i "" "s#https://www.example.com#$OLD_DOMAIN#g" .env;
+	sed -i "" "s#https://www.sitename.com#$OLD_DOMAIN#g" .env;
 	sed -i "" "s/SLUG=site-name/SLUG=$SLUG/g" .env;
 	sed -i "" "s/Site Name/$NAME/g" .env;
 	sed -i "" "s/Site tagline/$DESC/g" .env;
@@ -340,8 +342,8 @@ echo ""
 
 
 
-# RUN THE GULP
-if [[ $MODE == install-starter ]]; then
+# If Gulp file and package.json exist in theme folder, run the GULP
+if [[ -f wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f wp-content/themes/${SLUG}/package.json ]]; then
 
 
 	echo "GULP is running..."

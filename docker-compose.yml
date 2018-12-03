@@ -26,6 +26,7 @@ services:
       - db
       - gulp
 
+
   wpcli:
     image: wordpress:cli
     container_name: "${PREFIX}_wpcli"
@@ -43,6 +44,9 @@ services:
       - ./wp-content/themes/${SLUG}/:/var/www/html/wp-content/themes/${SLUG}/
       - ./wp-content/plugins/:/var/www/html/wp-content/plugins/
       - ./wp-content/uploads/:/var/www/html/wp-content/uploads/
+    entrypoint: wp
+    command: "--info"
+
 
   gulp:
     image: node:latest
@@ -78,6 +82,7 @@ services:
       timeout: 5s
       retries: 10
 
+
   phpmyadmin:
       image: phpmyadmin/phpmyadmin
       container_name: "${PREFIX}_phpmyadmin"
@@ -89,6 +94,7 @@ services:
           MYSQL_USER: root
           MYSQL_PASSWORD: password
           MYSQL_ROOT_PASSWORD: password
+
 
 volumes:
   db_data:
