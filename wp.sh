@@ -61,11 +61,11 @@ wp plugin delete akismet hello
 # Install our plugins (--activate)
 wp plugin install ${PLUGINS}
 
-# Delete the default posts
-wp post delete 2 --force
-
 # Change the Blog category
 wp term update category 1 --name=Blog --slug=blog
+
+# Delete the default Sample Page
+wp post delete 2 --force
 
 # Add the homepage
 wp post create --post_type=page --post_title='Home' --meta_input='{"_wp_page_template":"templates/home-page.php"}' --post_status=publish
