@@ -32,7 +32,7 @@ if [ -d wp-content/themes/* ]; then
 	MODE=install-different-theme
 	# 1. Check IP and Create Host*
 	# 2. Build the server *
-	# 3. Do the WP job *
+	# 3. Do the WP job * !!! Check this for installing different theme
 	# 4. Print the site info *
 	# 5. Print the Username & Pass *
 
@@ -40,7 +40,7 @@ fi
 
 
 # If DB dump exists
-if [ -f database/dump/*.sql ]; then
+if [ -f database/dump/*.sql ] || [ -d database/mysql/ ]; then
 
 	MODE=install-existing-site
 	# 1. Check IP and Create Host *
@@ -165,7 +165,6 @@ if [ $MODE == install-starter ]; then
 
 
 fi
-
 
 
 
