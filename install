@@ -128,6 +128,27 @@ if [[ ! -f .env ]]; then
 		[[ ! -z "$desc" ]] && DESC=$desc || echo "Using '${DESC}'"
 
 
+		# Ask for the admin info
+		read -ep "Admin Username (${ADMIN_USERNAME}): " admin_username
+		[[ ! -z "$admin_username" ]] && ADMIN_USERNAME=$admin_username || echo "Using '${ADMIN_USERNAME}'"
+
+
+		read -ep "Admin Email (${ADMIN_EMAIL}): " admin_email
+		[[ ! -z "$admin_email" ]] && ADMIN_EMAIL=$admin_email || echo "Using '${ADMIN_EMAIL}'"
+
+
+		read -ep "Admin First Name (${ADMIN_NAME}): " admin_name
+		[[ ! -z "$admin_name" ]] && ADMIN_NAME=$admin_name || echo "Using '${ADMIN_NAME}'"
+
+
+		read -ep "Admin Last Name (${ADMIN_LAST_NAME}): " admin_last_name
+		[[ ! -z "$admin_last_name" ]] && ADMIN_LAST_NAME=$admin_last_name || echo "Using '${ADMIN_LAST_NAME}'"
+
+
+		read -ep "Admin Website URL (${ADMIN_URL}): " admin_url
+		[[ ! -z "$admin_url" ]] && ADMIN_URL=$admin_url || echo "Using '${ADMIN_URL}'"
+
+
 	fi
 
 
@@ -190,6 +211,13 @@ if [[ $confirm == yes ]] || [[ $confirm == y ]]; then
 	sed -i "" "s/Site Name/$NAME/g" .env;
 	sed -i "" "s/Site tagline/$DESC/g" .env;
 	sed -i "" "s/PREFIX=sitename/PREFIX=$PREFIX/g" .env;
+
+	sed -i "" "s/ADMIN_USERNAME=Twelve12/ADMIN_USERNAME=$ADMIN_USERNAME/g" .env;
+	sed -i "" "s/Bill/$ADMIN_NAME/g" .env;
+	sed -i "" "s/T./$ADMIN_LAST_NAME/g" .env;
+	sed -i "" "s/webdesign@twelve12.com/$ADMIN_EMAIL/g" .env;
+	sed -i "" "s#https://www.twelve12.com#$ADMIN_URL#g" .env;
+
 	echo -e ".env file updated with the new info ... ${GREEN}done${RESET}"
 
 
