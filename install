@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# Get data from .env file
-source .env
-
-## REQUIREMENTS
-# Docker
+# Get data from local.env file
+source local.env
 
 
 # Colors
@@ -32,7 +29,7 @@ if [ -d wp-content/themes/* ]; then
 	MODE=install-different-theme
 	# 1. Check IP and Create Host*
 	# 2. Build the server *
-	# 3. Do the WP job * !!! Check this for installing different theme
+	# 3. Do the WP job *
 	# 4. Print the site info *
 	# 5. Print the Username & Pass *
 
@@ -65,25 +62,7 @@ fi
 
 
 echo "INSTALLATION MODE: $MODE"
-
-
-
-
-# # CONFIRM THE SITE INFO ???
-# read -ep "Domain Name (${DOMAIN}): " domain
-# [ ! -z "$domain" ] && DOMAIN=$domain || echo "Using '${DOMAIN}'"
-
-# read -ep "Website Name (${NAME}): " name
-# [ ! -z "$name" ] && NAME=$name || echo "Using '${NAME}'"
-
-# read -ep "Website Slug (${SLUG}): " slug
-# [ ! -z "$slug" ] && SLUG=$slug || echo "Using '${SLUG}'"
-
-# read -ep "Function Prefix (${PREFIX}): " prefix
-# [ ! -z "$prefix" ] && PREFIX=$prefix || echo "Using '${PREFIX}'"
-
-# read -ep "Website Tagline (${DESC}): " desc
-# [ ! -z "$desc" ] && DESC=$desc || echo "Using '${DESC}'"
+echo ""
 
 
 
@@ -107,6 +86,107 @@ if [ $MODE == already-installed ]; then
 	# Start the server
 	bash start
 	exit
+
+fi
+
+
+
+
+# CONFIRM THE SITE INFO
+# Confirm the environment information if .env file not exists
+if [ ! -f .env ]; then
+
+
+	# Get local domain info
+	read -ep "Domain Name (${DOMAIN}): " domain
+	[ ! -z "$domain" ] && DOMAIN=$domain || echo "Using '${DOMAIN}'"
+
+
+	# If importing existing website
+	if [ $MODE == install-existing-site ]; then
+
+		# Get local domain info
+		read -ep "Old full website URL (${OLD_DOMAIN}): " old_domain
+		[ ! -z "$old_domain" ] && OLD_DOMAIN=$old_domain || read -ep "Old full website URL (${OLD_DOMAIN}): " old_domain
+
+	fi
+
+
+	# When creating website from scratch
+	if [ $MODE == install-starter ] || [ $MODE == install-different-theme ]; then
+
+
+		read -ep "Active theme folder name (${SLUG}): " slug
+		[ ! -z "$slug" ] && SLUG=$slug || echo "Using '${SLUG}'"
+
+
+		read -ep "Website Name (${NAME}): " name
+		[ ! -z "$name" ] && NAME=$name || echo "Using '${NAME}'"
+
+
+		read -ep "Website Tagline (${DESC}): " desc
+		[ ! -z "$desc" ] && DESC=$desc || echo "Using '${DESC}'"
+
+
+	fi
+
+
+	# When using our starter theme
+	if [ $MODE == install-starter ]; then
+
+
+		read -ep "Function Prefixes (${PREFIX}): " prefix
+		[ ! -z "$prefix" ] && PREFIX=$prefix || echo "Using '${PREFIX}'"
+
+
+	fi
+
+
+	# Confirm the information
+	echo ""
+	echo ""
+	echo "== Information Entered ============"
+	echo ""
+	echo "Local development domain: $DOMAIN"
+	[ $MODE == install-existing-site ] && echo "Old full website URL: $OLD_DOMAIN" || sleep 0
+	echo "Active theme folder name: $SLUG"
+	echo "Website Name: $NAME"
+	echo "Website Tagline: $DESC"
+	[ $MODE == install-starter ] && echo "Function Prefixes: $PREFIX" || sleep 0
+	echo ""
+	echo "==================================="
+	echo ""
+	echo ""
+	read -ep "Are these correct? (type 'yes' to confirm): " confirm
+
+
+	# Confirmation
+	if [ $confirm == yes ]; then
+
+		# Create the .env file
+		cp local.env .env
+		echo -e ".env file created ... ${GREEN}done${RESET}"
+
+
+		# Update the .env file
+		sed -i "" "s/DOMAIN=dev.sitename.com/DOMAIN=$DOMAIN/g" .env;
+		sed -i "" "s/https:\/\/www.example.com/$OLD_DOMAIN/g" .env;
+		sed -i "" "s/SLUG=site-name/SLUG=$SLUG/g" .env;
+		sed -i "" "s/Site Name/$NAME/g" .env;
+		sed -i "" "s/Site tagline/$DESC/g" .env;
+		sed -i "" "s/PREFIX=sitename/PREFIX=$PREFIX/g" .env;
+		echo -e ".env file updated with the new info ... ${GREEN}done${RESET}"
+
+
+		# Get data from .env file
+		source .env
+
+	else
+
+		exit
+
+	fi
+
 
 fi
 

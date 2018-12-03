@@ -1,2 +1,4 @@
 database/mysql/*
 wp-content/*/*
+
+.env
