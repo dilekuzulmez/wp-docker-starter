@@ -52,7 +52,7 @@ wp rewrite structure "${POST_PERMALINK}"
 # Activate our theme
 wp theme activate ${SLUG}
 
-# Delete the other themes
+# Delete the default themes
 wp theme delete twentyfifteen twentyseventeen twentysixteen
 
 # Delete the default plugins
