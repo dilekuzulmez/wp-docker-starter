@@ -298,7 +298,7 @@ if [[ $MODE == install-starter ]]; then
 
 	# Install NPM packages
 	echo "NPM packages installing..."
-	docker-compose run --no-deps --rm gulp bash -c "npm run-script build"
+	docker-compose run --no-deps --rm gulp npm run-script build
 	echo -e "SCSS file built ... ${GREEN}done${RESET}"
 
 
@@ -347,7 +347,7 @@ if [[ -f wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f wp-content/themes/${S
 
 
 	echo "GULP is running..."
-	docker-compose run --rm gulp bash -c "npm start"
+	docker-compose run --rm gulp npm start
 
 
 fi
