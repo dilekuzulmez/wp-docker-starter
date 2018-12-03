@@ -6,10 +6,10 @@ Wordpress development environment with Docker. Template is being developed with 
 It has three types of using:
 1. Installing Wordpress with my empty starter template (Default)
 	* Nothing to do, just start installation
-2. Installing Wordpress with your own template
+2. Installing Wordpress with your own theme
 	* Put your theme folder(s) to "wp-content/themes/" folder
 	* Start installation and don't forget to type your theme folder name to activate on WP, when it asks for "Active theme folder name"
-3. Installing and existing Wordpress with a database dump and "wp-content/" folder (Not done yet)
+3. Installing and existing Wordpress with a database dump and "wp-content" folder (Not done yet)
 	* Put your .sql file to "database/dump/" folder
 	* Replace the "wp-content" with your own "wp-content" folder
 	* Start installation and don't forget to type your full old website URL to replace on WP DB, when it asks for "Old full website URL" (With "http:// or https:// protocol)
