@@ -47,14 +47,13 @@ services:
   gulp:
     image: node:latest
     container_name: "${PREFIX}_gulp"
-    user: "root"
+    user: "node"
     restart: "on-failure"
     working_dir: /home/node/app
     cap_add:
       - SYS_ADMIN
     volumes:
       - ./wp-content/themes/${SLUG}/:/home/node/app
-      - ./wp-content/themes/${SLUG}/node_modules/:/home/node/app/node_modules/
 
 
   db:

@@ -153,6 +153,12 @@ if [ $MODE == install-starter ]; then
 
 	# Download the template
 	git clone https://twelve12com@bitbucket.org/twelve12com/new-wordpress-theme-template.git wp-content/themes/${SLUG}/
+	echo -e "Starter theme clonned ... ${GREEN}done${RESET}"
+
+
+	# Update the permissions
+	chmod -R a=rwx wp-content/themes/${SLUG}/
+	echo -e "Theme file permissions updated ... ${GREEN}done${RESET}"
 
 
 	# Theme function prefix changes
