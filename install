@@ -150,7 +150,6 @@ if [ $MODE == install-starter ]; then
 
 	# Download the template
 	git clone https://twelve12com@bitbucket.org/twelve12com/new-wordpress-theme-template.git wp-content/themes/${SLUG}/
-	exit
 
 
 	# Theme function prefix changes
