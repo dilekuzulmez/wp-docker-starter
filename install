@@ -26,7 +26,7 @@ MODE=install-starter
 # 8. Run the GULP *
 
 
-# If the starter theme doesn't exist
+# If there is no theme in the themes folder
 if [ -d wp-content/themes/* ]; then
 
 	MODE=install-different-theme
@@ -39,7 +39,7 @@ if [ -d wp-content/themes/* ]; then
 fi
 
 
-# If DB dump exists
+# If DB dump or MySQL files exist
 if [ -f database/dump/*.sql ] || [ -d database/mysql/ ]; then
 
 	MODE=install-existing-site
@@ -51,7 +51,7 @@ if [ -f database/dump/*.sql ] || [ -d database/mysql/ ]; then
 fi
 
 
-# If local IP changed on .env file
+# If local IP already changed on .env file
 if [ $IP != 127.0.0.1 ]; then
 
 	MODE=already-installed
@@ -65,6 +65,8 @@ fi
 
 
 echo "INSTALLATION MODE: $MODE"
+
+
 
 
 # # CONFIRM THE SITE INFO ???
@@ -130,6 +132,7 @@ do
 
 
 	let COUNTER=COUNTER+1
+
 done
 
 # Update the environment file (.env) with the available IP
