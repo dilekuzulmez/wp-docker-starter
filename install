@@ -208,7 +208,7 @@ fi
 # CHECK IP AND CREATE HOST
 echo "Checking IP availability..."
 COUNTER=2
-while [[ $COUNTER -lt 10 ]]; do
+while [[ $COUNTER -lt 99 ]]; do
 
 	IP="127.0.0.${COUNTER}"
 
