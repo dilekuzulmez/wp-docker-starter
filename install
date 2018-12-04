@@ -248,9 +248,9 @@ while [[ $COUNTER -lt 120 ]]; do
 	else
 
 		if curl --max-time 3 --output /dev/null --silent --head --fail "${IP}"; then
-			echo "${IP} - NOT AVAILABLE" >&2
+			echo "${IP} - NOT AVAILABLE"
 		else
-			echo "${IP} - AVAILABLE" >&2
+			echo -e "${GREEN}${IP}${RESET} - AVAILABLE"
 			break
 		fi
 
