@@ -73,8 +73,8 @@ sudo bash stop
 		* Makes it default static posts page
 
 ### When Starting *(bash start)*
-1. Runs the Docker containers
-2. Runs the Gulp to watch SASS changes
+1. Runs the Docker containers, or starts installation if not already done
+2. Runs the Gulp to watch SASS changes (If starter template is being used)
 
 
 ### When pausing *(bash pause)*
@@ -83,5 +83,4 @@ sudo bash stop
 
 ### When stopping/removing *(sudo bash stop)*
 1. Stops and removes the Docker containers
-2. Makes the IP unavailable to install Docker servers
-3. Makes the development domain name (**"DOMAIN"** environment variable from .env file) unavailable by removing the IP from **"/etc/hosts"** file
+2. Removes the development domain name from **"/etc/hosts"** file
