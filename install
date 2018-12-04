@@ -128,25 +128,25 @@ if [[ ! -f .env ]]; then
 		[[ ! -z "$desc" ]] && DESC=$desc || echo "Using '${DESC}'"
 
 
-		# # Ask for the admin info
-		# read -ep "Admin Username (${ADMIN_USERNAME}): " admin_username
-		# [[ ! -z "$admin_username" ]] && ADMIN_USERNAME=$admin_username || echo "Using '${ADMIN_USERNAME}'"
+		# Ask for the admin info
+		read -ep "Developer Username (${DEVELOPER_USERNAME}): " developer_username
+		[[ ! -z "$developer_username" ]] && DEVELOPER_USERNAME=$developer_username || echo "Using '${DEVELOPER_USERNAME}'"
 
 
-		# read -ep "Admin Email (${ADMIN_EMAIL}): " admin_email
-		# [[ ! -z "$admin_email" ]] && ADMIN_EMAIL=$admin_email || echo "Using '${ADMIN_EMAIL}'"
+		read -ep "Developer Email (${DEVELOPER_EMAIL}): " developer_email
+		[[ ! -z "$developer_email" ]] && DEVELOPER_EMAIL=$developer_email || echo "Using '${DEVELOPER_EMAIL}'"
 
 
-		# read -ep "Admin First Name (${ADMIN_NAME}): " admin_name
-		# [[ ! -z "$admin_name" ]] && ADMIN_NAME=$admin_name || echo "Using '${ADMIN_NAME}'"
+		read -ep "Developer First Name (${DEVELOPER_NAME}): " developer_name
+		[[ ! -z "$developer_name" ]] && DEVELOPER_NAME=$developer_name || echo "Using '${DEVELOPER_NAME}'"
 
 
-		# read -ep "Admin Last Name (${ADMIN_LAST_NAME}): " admin_last_name
-		# [[ ! -z "$admin_last_name" ]] && ADMIN_LAST_NAME=$admin_last_name || echo "Using '${ADMIN_LAST_NAME}'"
+		read -ep "Developer Last Name (${DEVELOPER_LAST_NAME}): " developer_last_name
+		[[ ! -z "$developer_last_name" ]] && DEVELOPER_LAST_NAME=$developer_last_name || echo "Using '${DEVELOPER_LAST_NAME}'"
 
 
-		# read -ep "Admin Website URL (${ADMIN_URL}): " admin_url
-		# [[ ! -z "$admin_url" ]] && ADMIN_URL=$admin_url || echo "Using '${ADMIN_URL}'"
+		# read -ep "Developer Website URL (${DEVELOPER_URL}): " developer_url
+		# [[ ! -z "$developer_url" ]] && DEVELOPER_URL=$developer_url || echo "Using '${DEVELOPER_URL}'"
 
 
 	fi
@@ -212,11 +212,10 @@ if [[ $confirm == yes ]] || [[ $confirm == y ]]; then
 	sed -i "" "s/Site tagline/$DESC/g" .env;
 	sed -i "" "s/PREFIX=sitename/PREFIX=$PREFIX/g" .env;
 
-	# sed -i "" "s/ADMIN_USERNAME=Twelve12/ADMIN_USERNAME=$ADMIN_USERNAME/g" .env;
-	# sed -i "" "s/Bill/$ADMIN_NAME/g" .env;
-	# sed -i "" "s/T./$ADMIN_LAST_NAME/g" .env;
-	# sed -i "" "s/webdesign@twelve12.com/$ADMIN_EMAIL/g" .env;
-	# sed -i "" "s#https://www.twelve12.com#$ADMIN_URL#g" .env;
+	sed -i "" "s/DEVELOPER_USERNAME=Username/DEVELOPER_USERNAME=$DEVELOPER_USERNAME/g" .env;
+	sed -i "" "s/DEVELOPER_NAME=Name/DEVELOPER_NAME=$DEVELOPER_NAME/g" .env;
+	sed -i "" "s/DEVELOPER_LAST_NAME=Lastname/DEVELOPER_LAST_NAME=$DEVELOPER_LAST_NAME/g" .env;
+	sed -i "" "s#DEVELOPER_EMAIL=name@company.com#DEVELOPER_EMAIL=$DEVELOPER_EMAIL#g" .env;
 
 	echo -e ".env file updated with the new info ... ${GREEN}done${RESET}"
 
@@ -226,6 +225,7 @@ if [[ $confirm == yes ]] || [[ $confirm == y ]]; then
 
 else
 
+	bash install
 	exit
 
 fi
