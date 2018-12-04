@@ -9,10 +9,10 @@ It has three types of using:
 2. Installing Wordpress with your own theme
 	* Put your theme folder(s) to "wp-content/themes/" folder
 	* Start installation and don't forget to type your theme folder name to activate on WP, when it asks for "Active theme folder name"
-3. Installing and existing Wordpress with a database dump and "wp-content" folder (Not done yet)
+3. Installing an existing Wordpress with a database dump and "wp-content" folder
 	* Put your .sql file to "database/dump/" folder
 	* Replace the "wp-content" with your own "wp-content" folder
-	* Start installation and don't forget to type your full old website URL to replace on WP DB, when it asks for "Old full website URL" (With "http:// or https:// protocol)
+	* Start installation and don't forget to type your full old website URL to replace on WP DB, when it asks for "Old full website URL" (With "http:// or https:// protocol) (Not done yet)
 
 
 ### Installation
