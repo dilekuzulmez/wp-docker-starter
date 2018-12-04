@@ -236,17 +236,24 @@ fi
 # CHECK IP AND CREATE HOST
 echo "Checking IP availability..."
 COUNTER=2
-while [[ $COUNTER -lt 99 ]]; do
+while [[ $COUNTER -lt 120 ]]; do
 
 	IP="127.0.0.${COUNTER}"
 
 
 	echo "Checking '${IP}' availability..."
-	if curl --max-time 3 --output /dev/null --silent --head --fail "${IP}"; then
-		echo "${IP} - NOT AVAILABLE" >&2
+
+	if grep -q "${IP}" /etc/hosts; then
+		echo "${IP} - NOT AVAILABLE"
 	else
-		echo "${IP} - AVAILABLE" >&2
-		break
+
+		if curl --max-time 3 --output /dev/null --silent --head --fail "${IP}"; then
+			echo "${IP} - NOT AVAILABLE" >&2
+		else
+			echo "${IP} - AVAILABLE" >&2
+			break
+		fi
+
 	fi
 
 
