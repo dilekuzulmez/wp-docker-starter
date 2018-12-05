@@ -128,6 +128,17 @@ if [[ ! -f .env ]]; then
 		[[ ! -z "$desc" ]] && DESC=$desc || echo "Using '${DESC}'"
 
 
+		# When using our starter theme
+		if [[ $MODE == install-starter ]]; then
+
+
+			read -ep "Function Prefixes (${PREFIX}): " prefix
+			[[ ! -z "$prefix" ]] && PREFIX=$prefix || echo "Using '${PREFIX}'"
+
+
+		fi
+
+
 		# Ask for the admin info
 		read -ep "Developer Username (${DEVELOPER_USERNAME}): " developer_username
 		[[ ! -z "$developer_username" ]] && DEVELOPER_USERNAME=$developer_username || echo "Using '${DEVELOPER_USERNAME}'"
@@ -147,17 +158,6 @@ if [[ ! -f .env ]]; then
 
 		# read -ep "Developer Website URL (${DEVELOPER_URL}): " developer_url
 		# [[ ! -z "$developer_url" ]] && DEVELOPER_URL=$developer_url || echo "Using '${DEVELOPER_URL}'"
-
-
-	fi
-
-
-	# When using our starter theme
-	if [[ $MODE == install-starter ]]; then
-
-
-		read -ep "Function Prefixes (${PREFIX}): " prefix
-		[[ ! -z "$prefix" ]] && PREFIX=$prefix || echo "Using '${PREFIX}'"
 
 
 	fi
@@ -185,6 +185,7 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	echo "Active theme folder name: $SLUG"
 	echo "Website Name: $NAME"
 	echo "Website Tagline: $DESC"
+	[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
 	echo ""
 	echo "Developer Username: $DEVELOPER_USERNAME"
 	echo "Developer Email: $DEVELOPER_EMAIL"
@@ -192,7 +193,6 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	echo "Developer Last Name: $DEVELOPER_LAST_NAME"
 	echo ""
 fi
-[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
 echo ""
 echo "==================================="
 echo ""
@@ -306,6 +306,13 @@ if [[ $MODE == install-starter ]]; then
 
 
 fi
+
+
+
+
+# Update the permissions
+chmod -R a=rwx site/
+echo -e "File permissions updated ... ${GREEN}done${RESET}"
 
 
 

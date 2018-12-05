@@ -1,6 +1,3 @@
-site/database/mysql/*
-site/wp-content/*/*
-
+site/*
 !.gitkeep
-
 .env
