@@ -149,6 +149,10 @@ if [[ ! -f .env ]]; then
 		fi
 
 
+		read -ep "Plugins that needs to be installed (${PLUGINS}): " plugins
+		[[ ! -z "$plugins" ]] && PLUGINS=$plugins || echo "Using '${PLUGINS}'"
+
+
 		# Ask for the admin info
 		read -ep "Developer Username (${DEVELOPER_USERNAME}): " developer_username
 		[[ ! -z "$developer_username" ]] && DEVELOPER_USERNAME=$developer_username || echo "Using '${DEVELOPER_USERNAME}'"
@@ -196,6 +200,7 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	echo "Website Name: $NAME"
 	echo "Website Tagline: $DESC"
 	[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
+	echo "Plugins: $PLUGINS"
 	echo ""
 	echo "Developer Username: $DEVELOPER_USERNAME"
 	echo "Developer Email: $DEVELOPER_EMAIL"
@@ -227,6 +232,7 @@ if [[ $confirm == yes ]] || [[ $confirm == y ]]; then
 	sed -i "" "s/Site Name/$NAME/g" .env;
 	sed -i "" "s/Site tagline/$DESC/g" .env;
 	sed -i "" "s/PREFIX=sitename/PREFIX=$PREFIX/g" .env;
+	sed -i "" "s/custom-codes responsivity simplest-under-construction admin-menu-restriction duplicator wp-mail-logging google-analytics-for-wordpress fast-velocity-minify invisible-recaptcha/$PLUGINS/g" .env;
 
 	sed -i "" "s/DEVELOPER_USERNAME=Username/DEVELOPER_USERNAME=$DEVELOPER_USERNAME/g" .env;
 	sed -i "" "s/DEVELOPER_NAME=Name/DEVELOPER_NAME=$DEVELOPER_NAME/g" .env;
