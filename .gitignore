@@ -1,4 +1,6 @@
 site/database/mysql/*
 site/wp-content/*/*
 
+!.gitkeep
+
 .env
