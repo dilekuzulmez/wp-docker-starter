@@ -41,7 +41,7 @@ docker-compose up -d
 
 
 # If Gulp file and package.json exist in theme folder
-if [[ -f wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f wp-content/themes/${SLUG}/package.json ]]; then
+if [[ -f site/wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f site/wp-content/themes/${SLUG}/package.json ]]; then
 
 
 	# RUN THE GULP

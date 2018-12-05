@@ -7,11 +7,11 @@ It has three types of using:
 1. Installing Wordpress with my empty starter template (Default)
 	* Nothing to do, just start installation
 2. Installing Wordpress with your own theme
-	* Put your theme folder(s) to "wp-content/themes/" folder
+	* Put your theme folder(s) to "site/wp-content/themes/" folder
 	* Start installation and don't forget to type your theme folder name to activate on WP, when it asks for "Active theme folder name"
-3. Installing an existing Wordpress with a database dump and "wp-content" folder
-	* Put your .sql file to "database/dump/" folder
-	* Replace the "wp-content" with your own "wp-content" folder
+3. Installing an existing Wordpress with a database dump and "site/wp-content" folder
+	* Put your .sql file to "site/database/dump/" folder
+	* Replace the "site/wp-content" with your own "site/wp-content" folder
 	* Start installation and don't forget to type your full old website URL to replace on WP DB, when it asks for "Old full website URL" (With "http:// or https:// protocol) (Not done yet)
 
 
@@ -60,7 +60,7 @@ sudo bash stop
 	* Updates the tagline as defined in **".env"** file
 	* Updates the timezone as defined in **".env"** file
 	* Updates the blog posts permalink structure as defined in **".env"** file
-	* Activates the theme that's in the **"/wp-content/themes/"** folder
+	* Activates the theme that's in the **"/site/wp-content/themes/"** folder
 	* Deletes the other default themes **(twentyfifteen, twentyseventeen and twentysixteen)**
 	* Deletes the default plugins **(Akismet and Hello Dolly)**
 	* Installs the plugins that are listed in **".env"** file

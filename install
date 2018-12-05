@@ -24,7 +24,7 @@ MODE=install-starter
 
 
 # If there is no theme in the themes folder
-if [[ -d wp-content/themes/* ]]; then
+if [[ -d site/wp-content/themes/* ]]; then
 
 	MODE=install-different-theme
 	# 1. Check IP and Create Host*
@@ -37,7 +37,7 @@ fi
 
 
 # If DB dump or MySQL files exist
-if [[ -f database/dump/*.sql ]] || [[ -d database/mysql/ ]]; then
+if [[ -f site/database/dump/*.sql ]] || [[ -d site/database/mysql/ ]]; then
 
 	MODE=install-existing-site
 	# 1. Check IP and Create Host *
@@ -284,24 +284,24 @@ if [[ $MODE == install-starter ]]; then
 
 
 	# Download the template
-	git clone https://twelve12com@bitbucket.org/twelve12com/new-wordpress-theme-template.git wp-content/themes/${SLUG}/
+	git clone https://twelve12com@bitbucket.org/twelve12com/new-wordpress-theme-template.git site/wp-content/themes/${SLUG}/
 	echo -e "Starter theme clonned ... ${GREEN}done${RESET}"
 
 
 	# Update the permissions
-	chmod -R a=rwx wp-content/themes/${SLUG}/
+	chmod -R a=rwx site/wp-content/themes/${SLUG}/
 	echo -e "Theme file permissions updated ... ${GREEN}done${RESET}"
 
 
 	# Theme function prefix changes
-	sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/functions.php;
-	sed -i "" "s/sitename/${PREFIX}/g" wp-content/themes/${SLUG}/header.php;
+	sed -i "" "s/sitename/${PREFIX}/g" site/wp-content/themes/${SLUG}/functions.php;
+	sed -i "" "s/sitename/${PREFIX}/g" site/wp-content/themes/${SLUG}/header.php;
 	echo -e "Function prefixes changed as '${PREFIX}_' ... ${GREEN}done${RESET}"
 
 
 	# Theme info changes
-	sed -i "" "s/Site Name/${NAME}/g" wp-content/themes/${SLUG}/style.scss;
-	sed -i "" "s/Site tagline/${DESC}/g" wp-content/themes/${SLUG}/style.scss;
+	sed -i "" "s/Site Name/${NAME}/g" site/wp-content/themes/${SLUG}/style.scss;
+	sed -i "" "s/Site tagline/${DESC}/g" site/wp-content/themes/${SLUG}/style.scss;
 	echo -e "Theme information updated as '${NAME}' ... ${GREEN}done${RESET}"
 
 
@@ -384,7 +384,7 @@ echo ""
 
 
 # If Gulp file and package.json exist in theme folder, run the GULP
-if [[ -f wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f wp-content/themes/${SLUG}/package.json ]]; then
+if [[ -f site/wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f site/wp-content/themes/${SLUG}/package.json ]]; then
 
 
 	echo "GULP is running..."

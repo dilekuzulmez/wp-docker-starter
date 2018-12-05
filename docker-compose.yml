@@ -12,11 +12,11 @@ services:
       - ./config/php.conf.uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
       - wp_data:/var/www/html
       - wp_content:/var/www/html/wp-content/
-      - ./wp-content/:/var/www/html/wp-content/
-      - ./wp-content/themes/:/var/www/html/wp-content/themes/
-      - ./wp-content/themes/${SLUG}/:/var/www/html/wp-content/themes/${SLUG}/
-      - ./wp-content/plugins/:/var/www/html/wp-content/plugins/
-      - ./wp-content/uploads/:/var/www/html/wp-content/uploads/
+      - ./site/wp-content/:/var/www/html/wp-content/
+      - ./site/wp-content/themes/:/var/www/html/wp-content/themes/
+      - ./site/wp-content/themes/${SLUG}/:/var/www/html/wp-content/themes/${SLUG}/
+      - ./site/wp-content/plugins/:/var/www/html/wp-content/plugins/
+      - ./site/wp-content/uploads/:/var/www/html/wp-content/uploads/
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_NAME: wordpress_data
@@ -39,11 +39,11 @@ services:
     volumes:
       - wp_data:/var/www/html
       - wp_content:/var/www/html/wp-content/
-      - ./wp-content/:/var/www/html/wp-content/
-      - ./wp-content/themes/:/var/www/html/wp-content/themes/
-      - ./wp-content/themes/${SLUG}/:/var/www/html/wp-content/themes/${SLUG}/
-      - ./wp-content/plugins/:/var/www/html/wp-content/plugins/
-      - ./wp-content/uploads/:/var/www/html/wp-content/uploads/
+      - ./site/wp-content/:/var/www/html/wp-content/
+      - ./site/wp-content/themes/:/var/www/html/wp-content/themes/
+      - ./site/wp-content/themes/${SLUG}/:/var/www/html/wp-content/themes/${SLUG}/
+      - ./site/wp-content/plugins/:/var/www/html/wp-content/plugins/
+      - ./site/wp-content/uploads/:/var/www/html/wp-content/uploads/
     entrypoint: wp
     command: "--info"
 
@@ -57,7 +57,7 @@ services:
     cap_add:
       - SYS_ADMIN
     volumes:
-      - ./wp-content/themes/${SLUG}/:/home/node/app
+      - ./site/wp-content/themes/${SLUG}/:/home/node/app
 
 
   db:
@@ -72,8 +72,8 @@ services:
         '--collation-server=utf8mb4_unicode_ci'
     ]
     volumes:
-      - ./database/dump:/docker-entrypoint-initdb.d
-      - ./database/mysql:/var/lib/mysql
+      - ./site/database/dump:/docker-entrypoint-initdb.d
+      - ./site/database/mysql:/var/lib/mysql
     environment:
       MYSQL_DATABASE: wordpress_data
       MYSQL_ROOT_PASSWORD: password
