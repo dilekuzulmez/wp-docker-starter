@@ -92,6 +92,16 @@ fi
 
 
 
+# COPY THE site/.env FILE IF EXISTS
+if [[ -f site/.env ]] && [[ ! -f .env ]]; then
+
+	cp site/.env .env
+
+fi
+
+
+
+
 # CONFIRM THE SITE INFO
 # Confirm the environment information if .env file not exists
 if [[ ! -f .env ]]; then
@@ -222,8 +232,12 @@ if [[ $confirm == yes ]] || [[ $confirm == y ]]; then
 	sed -i "" "s/DEVELOPER_NAME=Name/DEVELOPER_NAME=$DEVELOPER_NAME/g" .env;
 	sed -i "" "s/DEVELOPER_LAST_NAME=Lastname/DEVELOPER_LAST_NAME=$DEVELOPER_LAST_NAME/g" .env;
 	sed -i "" "s#DEVELOPER_EMAIL=name@company.com#DEVELOPER_EMAIL=$DEVELOPER_EMAIL#g" .env;
-
 	echo -e ".env file updated with the new info ... ${GREEN}done${RESET}"
+
+
+	# Copy the .env file to "site/" folder
+	cp .env site/.env
+	echo -e ".env file copied to the 'site/' folder ... ${GREEN}done${RESET}"
 
 
 	# Get data from .env file
