@@ -185,6 +185,12 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	echo "Active theme folder name: $SLUG"
 	echo "Website Name: $NAME"
 	echo "Website Tagline: $DESC"
+	echo ""
+	echo "Developer Username: $DEVELOPER_USERNAME"
+	echo "Developer Email: $DEVELOPER_EMAIL"
+	echo "Developer First Name: $DEVELOPER_NAME"
+	echo "Developer Last Name: $DEVELOPER_LAST_NAME"
+	echo ""
 fi
 [[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
 echo ""
