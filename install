@@ -73,8 +73,8 @@ if [[ $MODE == already-installed ]]; then
 	# Force re-install
 	if [[ $1 == --f ]]; then
 
-		# Stop first
-		bash stop
+		# Uninstall first
+		bash uninstall
 
 		# Restart Installation
 		bash install
@@ -384,11 +384,53 @@ fi
 
 
 
-# DO THE WP WORKS
+# IF STARTING A NEW PROJECT
 if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; then
 
-
+	# DO THE WP WORKS
 	source wp.sh
+
+
+	# Create a private Bitbucket repository
+	(
+		cd site/
+		git init
+		git add -A .
+		git commit -m "Initial commit"
+
+
+
+		read -ep "Username (Twelve12com): " username
+		if [[ -z "$username" ]]; then
+		username=Twelve12com
+		echo "Using '$username'"
+		fi
+
+
+		echo 'Password:'
+		read -s password  # -s flag hides password text
+
+
+		read -ep "Repo Name ($SLUG): " reponame
+		if [[ -z "$reponame" ]]; then
+		reponame=$SLUG
+		echo "Using '$reponame'"
+		fi
+
+
+		curl POST -v -u $username:$password  -H "Content-Type: application/json" \
+	https://api.bitbucket.org/2.0/repositories/$username/$reponame \
+	-d '{"scm": "git", "is_private": "true", "fork_policy": "no_public_forks" }'
+
+
+		git remote add origin https://$username@bitbucket.org/$username/$reponame.git
+		git push -u origin --all
+		git push -u origin --tags
+
+
+		# Update .git permissions
+		sudo chmod -R a=rwx .git
+	)
 
 
 fi

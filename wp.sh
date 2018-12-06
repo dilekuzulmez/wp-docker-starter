@@ -78,6 +78,5 @@ wp option update show_on_front page
 wp post create --post_type=page --post_title='Blog' --post_status=publish
 
 # Update the static page
-wp option update page_on_front 4
 wp option update page_for_posts 5
 wp option update show_on_front page

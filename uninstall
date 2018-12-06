@@ -1,0 +1,41 @@
+#!/bin/bash
+
+
+# Install if not already
+if [[ ! -f .env ]]; then
+
+	echo "This project not installed yet."
+	exit
+
+fi
+
+
+# Get data from .env file
+source .env
+
+
+# Colors
+GREEN='\033[1;32m' # Green
+RESET='\033[0m' # No Color
+
+
+
+# Delete the server
+echo "Server is closing..."
+docker-compose down
+
+
+
+
+# Revert the IP on environment file (.env)
+sed -i "" "s/IP=${IP}/IP=127.0.0.1/g" .env;
+echo -e "'${IP}' reverted on .env file ... ${GREEN}done${RESET}"
+
+
+
+
+# Remove the host to the list
+sudo bash config/etc-hosts.sh -remove $DOMAIN
+killall -HUP mDNSResponder
+
+echo -e "${GREEN}Project Uninstalled${RESET}"
