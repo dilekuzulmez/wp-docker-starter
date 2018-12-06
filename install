@@ -370,7 +370,7 @@ echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
 
 
 # INSTALL NPM PACKAGES AND BUILD THE "style.css" FILE
-if [[ $MODE == install-starter ]]; then
+if [[ -f site/wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f site/wp-content/themes/${SLUG}/package.json ]]; then
 
 
 	# Install NPM packages
