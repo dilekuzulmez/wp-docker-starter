@@ -71,16 +71,18 @@ sudo bash stop
 		* Makes it default static front page
 	* Adds the **"Blog"** page
 		* Makes it default static posts page
+10. Asks for the BitBucket login info to create a private repository for this site
+11. Runs the Gulp to watch SASS changes (If package.json and gulpfile.js files exist in the active theme folder)
 
 ### When Starting *(bash start)*
 1. Runs the Docker containers, or starts installation if not already done
-2. Runs the Gulp to watch SASS changes (If starter template is being used)
+2. Runs the Gulp to watch SASS changes (If package.json and gulpfile.js files exist in the active theme folder)
 
 
-### When pausing *(bash pause)*
+### When stopping *(bash pause)*
 1. Only stops the Docker containers
 
 
-### When stopping/removing *(sudo bash stop)*
+### When uninstalling *(sudo bash stop)*
 1. Stops and removes the Docker containers
 2. Removes the development domain name from **"/etc/hosts"** file
