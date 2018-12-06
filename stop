@@ -1,5 +1,15 @@
 #!/bin/bash
 
+
+# Install if not already
+if [[ ! -f .env ]]; then
+
+	echo "This project not installed yet."
+	exit
+
+fi
+
+
 # Get data from .env file
 source .env
 
