@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Get data from .env file
+source .env
+
+
+# Colors
+GREEN='\033[1;32m' # Green
+RESET='\033[0m' # No Color
+
+
+# Ask for the commit message
+read -ep "Commit Message: " COMMIT_MESSAGE
+if [[ -z "$COMMIT_MESSAGE" ]]; then
+
+	bash push
+	exit
+
+fi
+
+
+# Save the DB backup
+docker-compose exec db /usr/bin/mysqldump -u root --password=password wordpress_data > site/database/dump/wordpress_data.sql
+echo -e "DB Backup saved in 'site/database/dump/wordpress_data.sql' ... ${GREEN}done${RESET}"
+
+
+# Show the git status
+git status
+
+
+# Stage all the changes
+git add -A .
+
+
+# Commit the changes
+git commit -m "$COMMIT_MESSAGE"
+
+
+# Push the changes
+git push
