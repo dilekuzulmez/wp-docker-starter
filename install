@@ -183,6 +183,14 @@ else
 	source .env
 
 
+	# COPY THE .env FILE IF EXISTS
+	if [[ ! -f site/.env ]]; then
+
+		cp .env site/.env
+
+	fi
+
+
 fi
 
 
