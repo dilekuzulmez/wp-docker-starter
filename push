@@ -24,17 +24,30 @@ docker-compose exec db /usr/bin/mysqldump -u root --password=password wordpress_
 echo -e "DB Backup saved in 'site/database/dump/wordpress_data.sql' ... ${GREEN}done${RESET}"
 
 
-# Show the git status
-git status
+(
+
+	# Open the site directory
+	cd site/
+	echo -e "Open the site directory ... ${GREEN}done${RESET}"
 
 
-# Stage all the changes
-git add -A .
+	# Stage all the changes
+	git add -A .
+	echo -e "Stage all the changes ... ${GREEN}done${RESET}"
 
 
-# Commit the changes
-git commit -m "$COMMIT_MESSAGE"
+	# Show the git status
+	git status
+	echo -e "Show the git status ... ${GREEN}done${RESET}"
 
 
-# Push the changes
-git push
+	# Commit the changes
+	git commit -m "$COMMIT_MESSAGE"
+	echo -e "Commit the changes ... ${GREEN}done${RESET}"
+
+
+	# Push the changes
+	git push
+	echo -e "Git push complete ... ${GREEN}done${RESET}"
+
+)
