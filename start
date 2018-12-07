@@ -50,12 +50,12 @@ docker-compose up -d
 
 
 
-# Update the permissions
-echo "Updating file permissions..."
-#chmod -R a=rwx site/
-find site/ -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
-find site/ -type f -exec chmod a+rw {} \;  # Make files read/write
-echo -e "File permissions updated ... ${GREEN}done${RESET}"
+# # Update the permissions
+# echo "Updating file permissions..."
+# #chmod -R a=rwx site/
+# find site/ -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
+# find site/ -type f -exec chmod a+rw {} \;  # Make files read/write
+# echo -e "File permissions updated ... ${GREEN}done${RESET}"
 
 
 
