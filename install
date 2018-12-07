@@ -447,6 +447,7 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 		curl POST -v -u $username:$password  -H "Content-Type: application/json" \
 	https://api.bitbucket.org/2.0/repositories/$username/$reponame \
 	-d '{"scm": "git", "is_private": "true", "fork_policy": "no_public_forks" }'
+		echo ""
 		echo -e "Create a private repo ... ${GREEN}done${RESET}"
 
 
