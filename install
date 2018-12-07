@@ -132,17 +132,12 @@ if [[ $MODE == install-starter ]] && [[ $1 == --remote ]]; then
 	echo -e "Git clone ... ${GREEN}done${RESET}"
 
 
-	# Update the permissions
-	chmod -R a=rwx site/wp-content/themes/${SLUG}/
-	echo -e "Theme file permissions updated ... ${GREEN}done${RESET}"
-
-
 	# If Gulp file and package.json exist in theme folder, remove the style.css and style.css.map
 	if [[ -f site/wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f site/wp-content/themes/${SLUG}/package.json ]]; then
 
-		rm site/wp-content/themes/${SLUG}/style.css
-		rm site/wp-content/themes/${SLUG}/style.css.map
-		rm site/wp-content/themes/${SLUG}/package-lock.json
+		rm -f site/wp-content/themes/${SLUG}/style.css
+		rm -f site/wp-content/themes/${SLUG}/style.css.map
+		rm -f site/wp-content/themes/${SLUG}/package-lock.json
 
 	fi
 
@@ -389,7 +384,9 @@ if [[ $MODE == install-starter ]]; then
 
 
 	# Update the permissions
-	chmod -R a=rwx site/wp-content/themes/${SLUG}/
+	#chmod -R a=rwx site/wp-content/themes/${SLUG}/
+	find site/wp-content/themes/${SLUG}/ -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
+	find site/wp-content/themes/${SLUG}/ -type f -exec chmod a+rw {} \;  # Make files read/write
 	echo -e "Theme file permissions updated ... ${GREEN}done${RESET}"
 
 
@@ -411,7 +408,9 @@ fi
 
 
 # Update the permissions
-chmod -R a=rwx site/
+#chmod -R a=rwx site/
+find site/ -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
+find site/ -type f -exec chmod a+rw {} \;  # Make files read/write
 echo -e "File permissions updated ... ${GREEN}done${RESET}"
 
 
@@ -536,7 +535,9 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 
 
 		# Update .git permissions
-		sudo chmod -R a=rwx .git
+		#sudo chmod -R a=rwx .git
+		find .git -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
+		find .git -type f -exec chmod a+rw {} \;  # Make files read/write
 		echo -e "Update permissions ... ${GREEN}done${RESET}"
 	)
 
