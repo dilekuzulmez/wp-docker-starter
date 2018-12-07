@@ -34,12 +34,12 @@ sudo bash start
 
 ### Stop the server temporarily
 ```bash
-sudo bash pause
+sudo bash stop
 ```
 
 ### Uninstalling
 ```bash
-sudo bash stop
+sudo bash uninstall
 ```
 <br><br>
 
@@ -86,10 +86,10 @@ sudo bash stop
 2. Runs the Gulp to watch SASS changes (If package.json and gulpfile.js files exist in the active theme folder)
 
 
-### When stopping *(bash pause)*
+### When stopping *(bash stop)*
 1. Only stops the Docker containers
 
 
-### When uninstalling *(sudo bash stop)*
+### When uninstalling *(sudo bash uninstall)*
 1. Stops and removes the Docker containers
 2. Removes the development domain name from **"/etc/hosts"** file
