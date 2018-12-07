@@ -391,12 +391,37 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	source wp.sh
 
 
+	# Save the DB backup
+	docker-compose exec db /usr/bin/mysqldump -u root --password=password wordpress_data > site/database/dump/wordpress_data.sql
+	echo -e "DB Backup saved in 'site/database/dump/wordpress_data.sql' ... ${GREEN}done${RESET}"
+
+
 	# Create a private Bitbucket repository
 	(
+
+		# Open the site directory
 		cd site/
+		echo -e "Open the site directory ... ${GREEN}done${RESET}"
+
+
+		# Initiate Git
 		git init
+		echo -e "Initiate Git ... ${GREEN}done${RESET}"
+
+
+		# Stage all the changes
 		git add -A .
+		echo -e "Stage all the changes ... ${GREEN}done${RESET}"
+
+
+		# Show the git status
+		git status
+		echo -e "Show the git status ... ${GREEN}done${RESET}"
+
+
+		# Commit the changes
 		git commit -m "Initial commit"
+		echo -e "Commit the changes ... ${GREEN}done${RESET}"
 
 
 
@@ -418,18 +443,27 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 		fi
 
 
+		# Create a private repo
 		curl POST -v -u $username:$password  -H "Content-Type: application/json" \
 	https://api.bitbucket.org/2.0/repositories/$username/$reponame \
 	-d '{"scm": "git", "is_private": "true", "fork_policy": "no_public_forks" }'
+		echo -e "Create a private repo ... ${GREEN}done${RESET}"
 
 
+		# Add the origin
 		git remote add origin https://$username@bitbucket.org/$username/$reponame.git
+		echo -e "Add the origin ... ${GREEN}done${RESET}"
+
+
+		# Push the changes
 		git push -u origin --all
 		git push -u origin --tags
+		echo -e "Push the files ... ${GREEN}done${RESET}"
 
 
 		# Update .git permissions
 		sudo chmod -R a=rwx .git
+		echo -e "Update permissions ... ${GREEN}done${RESET}"
 	)
 
 
