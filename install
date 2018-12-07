@@ -133,8 +133,18 @@ if [[ $MODE == install-starter ]] && [[ $1 == --remote ]]; then
 
 
 	# Update the permissions
-	chmod -R a=rwx site/wp-content/themes/
+	chmod -R a=rwx site/wp-content/themes/${SLUG}/
 	echo -e "Theme file permissions updated ... ${GREEN}done${RESET}"
+
+
+	# If Gulp file and package.json exist in theme folder, remove the style.css and style.css.map
+	if [[ -f site/wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f site/wp-content/themes/${SLUG}/package.json ]]; then
+
+		rm site/wp-content/themes/${SLUG}/style.css
+		rm site/wp-content/themes/${SLUG}/style.css.map
+		rm site/wp-content/themes/${SLUG}/package-lock.json
+
+	fi
 
 
 	# Start the server

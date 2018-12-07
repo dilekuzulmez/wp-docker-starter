@@ -51,7 +51,7 @@ services:
   gulp:
     image: node:latest
     container_name: "${PREFIX}_gulp"
-    user: "root"
+    user: "node"
     restart: "on-failure"
     working_dir: /home/node/app
     cap_add:
