@@ -173,6 +173,7 @@ if [[ ! -f .env ]]; then
 		echo -e "${RED}'${DOMAIN}' Host has already been added. Please remove it before installing.${RESET}"
 		exit
 	fi
+	echo -e "${GREEN}${DOMAIN}${RESET} - AVAILABLE"
 
 
 	# If importing existing website
