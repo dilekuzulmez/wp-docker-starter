@@ -40,6 +40,15 @@ docker-compose up -d
 
 
 
+# Pulling latest changes from git
+(
+	cd site/
+	git pull
+)
+
+
+
+
 # If Gulp file and package.json exist in theme folder
 if [[ -f site/wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f site/wp-content/themes/${SLUG}/package.json ]]; then
 
