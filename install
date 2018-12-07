@@ -6,6 +6,7 @@ source local.env
 
 # Colors
 GREEN='\033[1;32m' # Green
+RED='\033[1;31m' # Red
 RESET='\033[0m' # No Color
 
 
@@ -73,10 +74,14 @@ if [[ $MODE == already-installed ]]; then
 	# Force re-install
 	if [[ $1 == --f ]]; then
 
+		echo "FORCE RE-INSTALL"
+
 		# Uninstall first
+		echo "Uninstalling the server..."
 		bash uninstall
 
 		# Restart Installation
+		echo "Re-Installing the server..."
 		bash install
 		exit
 
@@ -84,7 +89,35 @@ if [[ $MODE == already-installed ]]; then
 
 
 	# Start the server
+	echo "Starting the server..."
 	bash start
+	exit
+
+fi
+
+
+
+
+# INSTALL FROM GIT REPO
+if [[ $MODE == install-starter ]] && [[ $1 == --remote ]]; then
+
+
+	read -ep "Git Url (https://username@bitbucket.org/username/reponame.git):" GIT_URL
+	[[ ! -z "$GIT_URL" ]] && sleep 0 || (echo "Empty URL" && exit)
+
+
+	# Delete the existing site folder
+	rm -rf site/
+	echo -e "Existing 'site' folder removed ... ${GREEN}done${RESET}"
+
+
+	# Clone the repo
+	git clone GIT_URL
+	echo -e "Git clone ... ${GREEN}done${RESET}"
+
+
+	# Start the server
+	bash install
 	exit
 
 fi
@@ -110,6 +143,14 @@ if [[ ! -f .env ]]; then
 	# Get local domain info
 	read -ep "Domain Name (${DOMAIN}): " domain
 	[[ ! -z "$domain" ]] && DOMAIN=$domain || echo "Using '${DOMAIN}'"
+
+
+	# CHECK THE LOCAL DOMAIN AVAILABILITY
+	echo "Checking '${DOMAIN}' availability..."
+	if grep -q "${DOMAIN}" /etc/hosts; then
+		echo -e "${RED}'${DOMAIN}' Host has already been added. Please remove it before installing.${RESET}"
+		exit
+	fi
 
 
 	# If importing existing website
@@ -267,6 +308,16 @@ fi
 
 
 
+# CHECK THE LOCAL DOMAIN AVAILABILITY
+echo "Checking '${DOMAIN}' availability..."
+if grep -q "${DOMAIN}" /etc/hosts; then
+	echo -e "${RED}'${DOMAIN}' Host has already been added. Please remove it before installing.${RESET}"
+	exit
+fi
+
+
+
+
 # CHECK IP AND CREATE HOST
 echo "Checking IP availability..."
 COUNTER=2
@@ -276,7 +327,6 @@ while [[ $COUNTER -lt 120 ]]; do
 
 
 	echo "Checking '${IP}' availability..."
-
 	if grep -q "${IP}" /etc/hosts; then
 		echo "${IP} - NOT AVAILABLE"
 	else
