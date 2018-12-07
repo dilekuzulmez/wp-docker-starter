@@ -24,8 +24,8 @@ MODE=install-starter
 # 8. Run the GULP *
 
 
-# If there is no theme in the themes folder
-if [[ -d site/wp-content/themes/* ]]; then
+# If there is a theme in the themes folder
+if [[ -d site/wp-content/ ]]; then
 
 	MODE=install-different-theme
 	# 1. Check IP and Create Host*
@@ -38,7 +38,7 @@ fi
 
 
 # If DB dump or MySQL files exist
-if [[ -f site/database/dump/*.sql ]] || [[ -d site/database/mysql/ ]]; then
+if [[ -f site/database/dump/wordpress_data.sql ]] || [[ -d site/database/mysql/ ]]; then
 
 	MODE=install-existing-site
 	# 1. Check IP and Create Host *
@@ -112,11 +112,12 @@ if [[ $MODE == install-starter ]] && [[ $1 == --remote ]]; then
 
 
 	# Clone the repo
-	git clone GIT_URL
+	git clone $GIT_URL site/
 	echo -e "Git clone ... ${GREEN}done${RESET}"
 
 
 	# Start the server
+	echo "Restarting the installation..."
 	bash install
 	exit
 
@@ -314,6 +315,7 @@ if grep -q "${DOMAIN}" /etc/hosts; then
 	echo -e "${RED}'${DOMAIN}' Host has already been added. Please remove it before installing.${RESET}"
 	exit
 fi
+echo -e "${GREEN}${DOMAIN}${RESET} - AVAILABLE"
 
 
 
@@ -332,7 +334,7 @@ while [[ $COUNTER -lt 120 ]]; do
 	else
 
 		if curl --max-time 3 --output /dev/null --silent --head --fail "${IP}"; then
-			echo "${IP} - NOT AVAILABLE"
+			echo -e "${RED}${IP}${RESET} - NOT AVAILABLE"
 		else
 			echo -e "${GREEN}${IP}${RESET} - AVAILABLE"
 			break
