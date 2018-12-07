@@ -13,11 +13,18 @@ It has three types of using:
 	* Put your .sql file to "site/database/dump/" folder
 	* Replace the "site/wp-content" with your own "site/wp-content" folder
 	* Start installation and don't forget to type your full old website URL to replace on WP DB, when it asks for "Old full website URL" (With "http:// or https:// protocol) (Not done yet)
+4. Installing an existing Wordpress with a Git URL
+	* Add **--remote** flag to normal installation code
 
 
 ### Installation
 ```bash
 sudo bash install
+```
+
+### Installation from remote repo
+```bash
+sudo bash install --remote
 ```
 
 ### Restarting

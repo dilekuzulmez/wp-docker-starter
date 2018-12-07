@@ -4,6 +4,22 @@
 source local.env
 
 
+# COPY THE site/.env FILE IF EXISTS
+if [[ -f site/.env ]] && [[ ! -f .env ]]; then
+
+	cp site/.env .env
+
+fi
+
+
+# Get data from .env file
+if [[ -f .env ]]; then
+
+	source .env
+
+fi
+
+
 # Colors
 GREEN='\033[1;32m' # Green
 RED='\033[1;31m' # Red
@@ -116,20 +132,15 @@ if [[ $MODE == install-starter ]] && [[ $1 == --remote ]]; then
 	echo -e "Git clone ... ${GREEN}done${RESET}"
 
 
+	# Update the permissions
+	chmod -R a=rwx site/wp-content/themes/
+	echo -e "Theme file permissions updated ... ${GREEN}done${RESET}"
+
+
 	# Start the server
 	echo "Restarting the installation..."
 	bash install
 	exit
-
-fi
-
-
-
-
-# COPY THE site/.env FILE IF EXISTS
-if [[ -f site/.env ]] && [[ ! -f .env ]]; then
-
-	cp site/.env .env
 
 fi
 
@@ -220,9 +231,6 @@ if [[ ! -f .env ]]; then
 
 
 else
-
-
-	source .env
 
 
 	# COPY THE .env FILE IF EXISTS
