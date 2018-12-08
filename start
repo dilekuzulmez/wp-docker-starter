@@ -33,9 +33,9 @@ echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
 
 
 
-# Start the docker containers
-echo "Starting the server..."
-docker-compose up -d
+# DETECT DB CHANGES
+DB_FILE=site/database/dump/wordpress_data.sql
+DB_SUM1=$(md5 -r $DB_FILE)
 
 
 
@@ -50,12 +50,48 @@ docker-compose up -d
 
 
 
-# # Update the permissions
-# echo "Updating file permissions..."
-# #chmod -R a=rwx site/
-# find site/ -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
-# find site/ -type f -exec chmod a+rw {} \;  # Make files read/write
-# echo -e "File permissions updated ... ${GREEN}done${RESET}"
+# DETECT DB CHANGES
+DB_SUM2=$(md5 -r $DB_FILE)
+echo "FILES: $DB_SUM1 and $DB_SUM2"
+if [[ $DB_SUM1 != $DB_SUM2 ]]; then
+
+
+	echo "DB changed."
+
+	echo "Closing server..."
+	docker-compose down
+	echo -e "Server is down ... ${GREEN}done${RESET}"
+
+	echo "Old data removing..."
+	rm -rf site/database/mysql/
+	echo -e "Remove old data ... ${GREEN}done${RESET}"
+
+
+	echo "Site is building again..."
+	docker-compose up -d
+	echo -e "Build server again ... ${GREEN}done${RESET}"
+
+
+	# Check MySQL to be ready
+	while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
+		echo "Waiting for database connection..."
+		sleep 3
+	done
+	echo -e "MySQL is ready! ... ${GREEN}done${RESET}"
+
+
+else
+
+
+	echo "DB is identical"
+
+
+	# Start the docker containers
+	echo "Starting the server..."
+	docker-compose up -d
+	echo -e "Server is ${GREEN}up${RESET}"
+
+fi
 
 
 
