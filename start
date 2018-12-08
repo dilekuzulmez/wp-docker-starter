@@ -52,7 +52,6 @@ DB_SUM1=$(md5 -r $DB_FILE)
 
 # DETECT DB CHANGES
 DB_SUM2=$(md5 -r $DB_FILE)
-echo "FILES: $DB_SUM1 and $DB_SUM2"
 if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 
 
