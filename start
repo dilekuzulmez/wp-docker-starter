@@ -72,6 +72,11 @@ if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 	echo -e "Build server again ... ${GREEN}done${RESET}"
 
 
+	echo "Fixing the permissions..."
+	docker-compose exec wp chmod a=rwx /var/www/html/wp-content/
+	echo -e "Permissions fixed ... ${GREEN}done${RESET}"
+
+
 	# Check MySQL to be ready
 	while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
 		echo "Waiting for database connection..."
@@ -90,6 +95,11 @@ else
 	echo "Starting the server..."
 	docker-compose up -d
 	echo -e "Server is ${GREEN}up${RESET}"
+
+
+	echo "Fixing the permissions..."
+	docker-compose exec wp chmod a=rwx /var/www/html/wp-content/
+	echo -e "Permissions fixed ... ${GREEN}done${RESET}"
 
 fi
 
