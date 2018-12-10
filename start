@@ -26,9 +26,17 @@ source .env
 
 
 
+# Builder updates
+echo "Updating the builder..."
+git pull
+echo -e "Builder update complete ... ${GREEN}done${RESET}"
+
+
+
+
 # Open that IP slot
 ifconfig lo0 alias $IP up
-echo -e "'${IP}' is now available to build server ... ${GREEN}done${RESET}"
+echo -e "'${IP}' is now available ... ${GREEN}done${RESET}"
 
 
 
@@ -43,6 +51,7 @@ DB_SUM1=$(md5 -r $DB_FILE)
 # Pulling latest changes from git
 (
 	cd site/
+	echo "Checking the latest remote changes..."
 	git pull
 	echo -e "Git pull complete ... ${GREEN}done${RESET}"
 )
