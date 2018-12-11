@@ -32,6 +32,12 @@ sudo bash install --remote
 sudo bash start
 ```
 
+### Pushing to Git Repo
+```bash
+sudo bash push
+Commit Message: ............... (Asks for the commit message before pushing)
+```
+
 ### Stop the server temporarily
 ```bash
 sudo bash stop
@@ -81,15 +87,22 @@ sudo bash uninstall
 10. Asks for the BitBucket login info to create a private repository for this site
 11. Runs the Gulp to watch SASS changes (If package.json and gulpfile.js files exist in the active theme folder)
 
-### When Starting *(bash start)*
+
+### When Starting *(sudo bash start)*
 1. Runs the Docker containers, or starts installation if not already done
 2. Runs the Gulp to watch SASS changes (If package.json and gulpfile.js files exist in the active theme folder)
 
 
-### When stopping *(bash stop)*
+### When Pushing to Git *(sudo bash push)*
+1. Creates DB backup
+2. Asks for the commit message
+3. Pushes to the remote git repo
+
+
+### When Stopping *(sudo bash stop)*
 1. Only stops the Docker containers
 
 
-### When uninstalling *(sudo bash uninstall)*
+### When Uninstalling *(sudo bash uninstall)*
 1. Stops and removes the Docker containers
 2. Removes the development domain name from **"/etc/hosts"** file
