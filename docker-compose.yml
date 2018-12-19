@@ -61,7 +61,7 @@ services:
 
 
   db:
-    image: mysql:latest
+    image: mysql:8
     container_name: "${PREFIX}_mysql"
     restart: "always"
     ports:
