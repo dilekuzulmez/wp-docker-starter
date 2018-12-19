@@ -1,9 +1,15 @@
 # Wordpress Docker Starter with a Clean Template (BETA)
-Wordpress development environment with Docker. Template is being developed with Flexible Grid System. (This documentation will be updated soon) (Only tested on mac)
+Wordpress development environment with Docker. Template is being developed with Flexible Grid System. (Only tested on MacOS)
 <br><br>
 
 ## Usage & Preparation
-It has three types of using:
+
+### Clonning
+```bash
+git clone https://github.com/bilaltas/wp-docker-starter.git project-name && cd project-name
+```
+
+Then, it has four types of using:
 1. Installing Wordpress with my empty starter template (Default)
 	* Nothing to do, just start installation
 2. Installing Wordpress with your own theme
