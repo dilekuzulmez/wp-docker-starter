@@ -1,4 +1,8 @@
 #!/bin/bash
+source global.sh
+
+
+
 
 # Get data from local.env file
 source local.env
@@ -20,10 +24,12 @@ if [[ -f .env ]]; then
 fi
 
 
-# Colors
-GREEN='\033[1;32m' # Green
-RED='\033[1;31m' # Red
-RESET='\033[0m' # No Color
+
+
+# Builder updates
+self_update
+
+
 
 
 # CHECK THE PROJECT STATUS
@@ -556,8 +562,8 @@ echo "Admin Page: http://${DOMAIN}/wp-admin"
 
 if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; then
 
-	echo "Username: ${DEVELOPER_USERNAME}"
-	echo "${ONLY_PASSWORD}"
+	echo "Username: ${ADMIN_USERNAME}"
+	echo "${ADMIN_ONLY_PASSWORD}"
 
 fi
 

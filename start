@@ -1,9 +1,5 @@
 #!/bin/bash
-
-
-# Colors
-GREEN='\033[1;32m' # Green
-RESET='\033[0m' # No Color
+source global.sh
 
 
 
@@ -27,9 +23,7 @@ source .env
 
 
 # Builder updates
-echo "Updating the builder..."
-git pull
-echo -e "Builder update complete ... ${GREEN}done${RESET}"
+self_update
 
 
 

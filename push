@@ -1,12 +1,13 @@
 #!/bin/bash
+source global.sh
+
+
+
 
 # Get data from .env file
 source .env
 
 
-# Colors
-GREEN='\033[1;32m' # Green
-RESET='\033[0m' # No Color
 
 
 (

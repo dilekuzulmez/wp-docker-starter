@@ -1,13 +1,16 @@
 #!/bin/bash
-
 source .env
 
 function wp {
 	command docker-compose run --no-deps --rm wpcli --allow-root "$@"
 }
 
+
 # WP Installation
-wp core install --url="http://${DOMAIN}" --title="${NAME}" --admin_user=${ADMIN_USERNAME} --admin_email=${ADMIN_EMAIL} --skip-email
+ADMIN_PASSWORD_INFO="$(wp core install --url="http://${DOMAIN}" --title="${NAME}" --admin_user=${ADMIN_USERNAME} --admin_email=${ADMIN_EMAIL} --skip-email)"
+echo "${ADMIN_PASSWORD_INFO}"
+export ADMIN_ONLY_PASSWORD=${ADMIN_PASSWORD_INFO##*$'\n'}
+
 
 # Update admin info
 wp user update ${ADMIN_USERNAME} --user_url=${ADMIN_URL} --display_name="${ADMIN_NAME} ${ADMIN_LAST_NAME}" --first_name="${ADMIN_NAME}" --last_name="${ADMIN_LAST_NAME}"
@@ -23,17 +26,16 @@ wp user meta update ${ADMIN_USERNAME} show_try_gutenberg_panel 0
 if [[ ${DEVELOPER_EMAIL} != ${ADMIN_EMAIL} ]] && [[ ${DEVELOPER_EMAIL} != "" ]]
 then
 
-	PASSWORD_INFO="$(wp user create ${DEVELOPER_USERNAME} ${DEVELOPER_EMAIL} --user_url=${ADMIN_URL} --display_name="${DEVELOPER_NAME} ${DEVELOPER_LAST_NAME}" --first_name="${DEVELOPER_NAME}" --last_name="${DEVELOPER_LAST_NAME}" --role=administrator)"
-	echo "${PASSWORD_INFO}"
-	export ONLY_PASSWORD=${PASSWORD_INFO##*$'\n'}
+	DEVELOPER_PASSWORD_INFO="$(wp user create ${DEVELOPER_USERNAME} ${DEVELOPER_EMAIL} --user_url=${ADMIN_URL} --display_name="${DEVELOPER_NAME} ${DEVELOPER_LAST_NAME}" --first_name="${DEVELOPER_NAME}" --last_name="${DEVELOPER_LAST_NAME}" --role=administrator)"
+	echo "${DEVELOPER_PASSWORD_INFO}"
+	export DEVELOPER_ONLY_PASSWORD=${DEVELOPER_PASSWORD_INFO##*$'\n'}
+	ADMIN_ONLY_PASSWORD=$DEVELOPER_ONLY_PASSWORD
+	ADMIN_USERNAME=$DEVELOPER_USERNAME
+
 
 	wp user meta update ${DEVELOPER_USERNAME} show_admin_bar_front 0
 	wp user meta update ${DEVELOPER_USERNAME} show_welcome_panel 0
 	wp user meta update ${DEVELOPER_USERNAME} show_try_gutenberg_panel 0
-
-else
-
-	DEVELOPER_NAME=${ADMIN_USERNAME}
 
 fi
 
@@ -53,7 +55,7 @@ wp rewrite structure "${POST_PERMALINK}"
 wp theme activate ${SLUG}
 
 # Delete the default themes
-wp theme delete twentyfifteen twentyseventeen twentysixteen
+wp theme delete twentyfifteen twentysixteen twentyseventeen twentynineteen
 
 # Delete the default plugins
 wp plugin delete akismet hello
