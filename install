@@ -264,7 +264,9 @@ echo ""
 echo "== Information Entered ============"
 echo ""
 echo "Local development domain: $DOMAIN"
+
 [[ $MODE == install-existing-site ]] && echo "Old full website URL: $OLD_DOMAIN" || sleep 0
+
 if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; then
 	echo "Active theme folder name: $SLUG"
 	echo "Website Name: $NAME"
@@ -272,11 +274,15 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
 	echo "Plugins: $PLUGINS"
 	echo ""
-	echo "Developer Username: $DEVELOPER_USERNAME"
-	echo "Developer Email: $DEVELOPER_EMAIL"
-	echo "Developer First Name: $DEVELOPER_NAME"
-	echo "Developer Last Name: $DEVELOPER_LAST_NAME"
-	echo ""
+
+	if [[ $DEVELOPER_EMAIL != webdesign@twelve12.com ]]
+		echo "Developer Username: $DEVELOPER_USERNAME"
+		echo "Developer Email: $DEVELOPER_EMAIL"
+		echo "Developer First Name: $DEVELOPER_NAME"
+		echo "Developer Last Name: $DEVELOPER_LAST_NAME"
+		echo ""
+	fi
+
 fi
 echo ""
 echo "==================================="

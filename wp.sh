@@ -9,7 +9,8 @@ function wp {
 # WP Installation
 ADMIN_PASSWORD_INFO="$(wp core install --url="http://${DOMAIN}" --title="${NAME}" --admin_user=${ADMIN_USERNAME} --admin_email=${ADMIN_EMAIL} --skip-email)"
 echo "${ADMIN_PASSWORD_INFO}"
-export ADMIN_ONLY_PASSWORD=${ADMIN_PASSWORD_INFO##*$'\n'}
+ADMIN_ONLY_PASSWORD=(${ADMIN_PASSWORD_INFO[@]})
+export ADMIN_ONLY_PASSWORD=${ADMIN_ONLY_PASSWORD[0]}
 
 
 # Update admin info
@@ -29,8 +30,9 @@ then
 	DEVELOPER_PASSWORD_INFO="$(wp user create ${DEVELOPER_USERNAME} ${DEVELOPER_EMAIL} --user_url=${ADMIN_URL} --display_name="${DEVELOPER_NAME} ${DEVELOPER_LAST_NAME}" --first_name="${DEVELOPER_NAME}" --last_name="${DEVELOPER_LAST_NAME}" --role=administrator)"
 	echo "${DEVELOPER_PASSWORD_INFO}"
 	export DEVELOPER_ONLY_PASSWORD=${DEVELOPER_PASSWORD_INFO##*$'\n'}
-	ADMIN_ONLY_PASSWORD=$DEVELOPER_ONLY_PASSWORD
-	ADMIN_USERNAME=$DEVELOPER_USERNAME
+
+	export ADMIN_ONLY_PASSWORD=${DEVELOPER_ONLY_PASSWORD}
+	export ADMIN_USERNAME=${DEVELOPER_USERNAME}
 
 
 	wp user meta update ${DEVELOPER_USERNAME} show_admin_bar_front 0
@@ -55,7 +57,7 @@ wp rewrite structure "${POST_PERMALINK}"
 wp theme activate ${SLUG}
 
 # Delete the default themes
-wp theme delete twentyfifteen twentysixteen twentyseventeen twentynineteen
+wp theme delete twentysixteen twentyseventeen twentynineteen
 
 # Delete the default plugins
 wp plugin delete akismet hello
