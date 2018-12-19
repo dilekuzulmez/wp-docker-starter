@@ -275,7 +275,7 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	echo "Plugins: $PLUGINS"
 	echo ""
 
-	if [[ $DEVELOPER_EMAIL != webdesign@twelve12.com ]]
+	if [[ $DEVELOPER_EMAIL != webdesign@twelve12.com ]]; then
 		echo "Developer Username: $DEVELOPER_USERNAME"
 		echo "Developer Email: $DEVELOPER_EMAIL"
 		echo "Developer First Name: $DEVELOPER_NAME"
