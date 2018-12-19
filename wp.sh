@@ -9,8 +9,7 @@ function wp {
 # WP Installation
 ADMIN_PASSWORD_INFO="$(wp core install --url="http://${DOMAIN}" --title="${NAME}" --admin_user=${ADMIN_USERNAME} --admin_email=${ADMIN_EMAIL} --skip-email)"
 echo "${ADMIN_PASSWORD_INFO}"
-ADMIN_ONLY_PASSWORD=(${ADMIN_PASSWORD_INFO[@]})
-export ADMIN_ONLY_PASSWORD=${ADMIN_ONLY_PASSWORD[0]}
+export ADMIN_ONLY_PASSWORD=`echo "${ADMIN_PASSWORD_INFO}" | head -1`
 
 
 # Update admin info
@@ -29,7 +28,7 @@ then
 
 	DEVELOPER_PASSWORD_INFO="$(wp user create ${DEVELOPER_USERNAME} ${DEVELOPER_EMAIL} --user_url=${ADMIN_URL} --display_name="${DEVELOPER_NAME} ${DEVELOPER_LAST_NAME}" --first_name="${DEVELOPER_NAME}" --last_name="${DEVELOPER_LAST_NAME}" --role=administrator)"
 	echo "${DEVELOPER_PASSWORD_INFO}"
-	export DEVELOPER_ONLY_PASSWORD=${DEVELOPER_PASSWORD_INFO##*$'\n'}
+	DEVELOPER_ONLY_PASSWORD=${DEVELOPER_PASSWORD_INFO##*$'\n'}
 
 	export ADMIN_ONLY_PASSWORD=${DEVELOPER_ONLY_PASSWORD}
 	export ADMIN_USERNAME=${DEVELOPER_USERNAME}
