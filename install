@@ -559,6 +559,14 @@ fi
 
 
 
+# Fix the permissions
+echo "Fixing the server permissions..."
+docker-compose exec wp chmod a=rwx /var/www/html/wp-content/
+echo -e "Server permissions fixed ... ${GREEN}done${RESET}"
+
+
+
+
 # PRINT THE SITE INFO
 echo ""
 echo ""
