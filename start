@@ -56,6 +56,7 @@ if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 
 	echo "DB changed."
 
+
 	echo "Closing server..."
 	docker-compose down
 	echo -e "Server is down ... ${GREEN}done${RESET}"
@@ -71,10 +72,6 @@ if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 	echo -e "Build server again ... ${GREEN}done${RESET}"
 
 
-	# Server permission update
-	# server_permission_update /var/www/html/wp-content/
-
-
 	# Check MySQL to be ready
 	while ! docker-compose exec db mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
 		echo "Waiting for database connection..."
@@ -86,7 +83,7 @@ if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 else
 
 
-	echo "DB is identical"
+	echo "DB is identical."
 
 
 	# Start the docker containers
@@ -95,16 +92,17 @@ else
 	echo -e "Server is ${GREEN}up${RESET}"
 
 
-	# Server permission update
-	# server_permission_update /var/www/html/wp-content/
-
 fi
 
 
 
 
+# Server permission update
+# server_permission_update /var/www/html/wp-content/
+
+
 # Local file permission update
-permission_update site/wp-content/
+# permission_update site/wp-content/
 
 
 
