@@ -29,7 +29,7 @@ function server_permission_update () {
 function permission_update () {
 
 	echo "Fixing the file permissions in ($1)..."
-	sudo chown -R $(whoami):staff $1
+	sudo chown -R ${USER}:staff $1
 	# sudo chmod -R a=rwx $1
 	find $1 -type d -exec chmod 755 {} \;
 	find $1 -type f -exec chmod 644 {} \;
