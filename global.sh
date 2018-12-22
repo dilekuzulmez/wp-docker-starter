@@ -30,7 +30,7 @@ function permission_update () {
 
 	echo "Fixing the file permissions in ($1)..."
 	#sudo chown -R $(logname):staff $1
-	find $1 ! -path */node_modules/* -exec chown -R $(logname):staff {} \;
+	find $1 ! -path */node_modules/* -exec chown $(logname):staff {} \;
 	# sudo chmod -R a=rwx $1
 	find $1 -type d ! -path */node_modules/* -exec chmod 755 {} \;
 	find $1 -type f ! -path */node_modules/* -exec chmod 644 {} \;
