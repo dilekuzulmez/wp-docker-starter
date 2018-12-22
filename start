@@ -72,7 +72,7 @@ if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 
 
 	# Server permission update
-	server_permission_update /var/www/html/wp-content/
+	# server_permission_update /var/www/html/wp-content/
 
 
 	# Check MySQL to be ready
