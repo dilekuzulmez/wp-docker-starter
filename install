@@ -536,7 +536,7 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 		echo ""
 
 
-		read -ep "Are these information correct? (yes | retype)" gitconfirm
+		read -ep "Are these information correct? (yes | retype): " gitconfirm
 		if [[ $gitconfirm == retype ]]; then
 
 
