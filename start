@@ -76,7 +76,6 @@ if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 
 	# Server permission update
 	server_permission_update /var/www/html/wp-content/
-	echo -e "Server file permissions fixed ... ${GREEN}done${RESET}"
 
 
 	# Check MySQL to be ready
@@ -101,12 +100,10 @@ else
 
 	# Server permission update
 	server_permission_update /var/www/html/wp-content/
-	echo -e "Server file permissions fixed ... ${GREEN}done${RESET}"
 
 
 	# Local file permission update
 	permission_update site/wp-content/
-	echo -e "File permissions fixed ... ${GREEN}done${RESET}"
 
 fi
 
