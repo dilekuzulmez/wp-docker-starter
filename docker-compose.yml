@@ -63,6 +63,7 @@ services:
   db:
     image: mysql:8
     container_name: "${PREFIX}_mysql"
+    user: root
     restart: "always"
     ports:
       - ${IP}:3306:3306
