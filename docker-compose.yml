@@ -25,7 +25,6 @@ services:
     depends_on:
       - db
       - gulp
-    entrypoint: bash -c "find /var/www/html/wp-content/ -type d -exec chmod 755 {} \; && find /var/www/html/wp-content/ -type f -exec chmod 644 {} \; && echo 'Permissions updated'"
 
 
   wpcli:
