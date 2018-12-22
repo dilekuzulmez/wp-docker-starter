@@ -25,13 +25,6 @@ source .env
 	echo -e "DB Backup saved in '$DB_FILE' ... ${GREEN}done${RESET}"
 
 
-	# # Update the permissions
-	# echo "Updating file permissions..."
-	# find . -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
-	# find . -type f -exec chmod a+rw {} \;  # Make files read/write
-	# echo -e "Update the permissions ... ${GREEN}done${RESET}"
-
-
 	# Stage all the changes
 	echo "Staging all the changes..."
 	git add -A .

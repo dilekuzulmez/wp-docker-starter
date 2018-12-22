@@ -396,9 +396,7 @@ if [[ $MODE == install-starter ]]; then
 
 
 	# Update the permissions
-	#chmod -R a=rwx site/wp-content/themes/${SLUG}/
-	find site/wp-content/themes/${SLUG}/ -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
-	find site/wp-content/themes/${SLUG}/ -type f -exec chmod a+rw {} \;  # Make files read/write
+	permission_update site/wp-content/themes/${SLUG}/
 	echo -e "Theme file permissions updated ... ${GREEN}done${RESET}"
 
 
@@ -420,9 +418,7 @@ fi
 
 
 # Update the permissions
-#chmod -R a=rwx site/
-find site/ -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
-find site/ -type f -exec chmod a+rw {} \;  # Make files read/write
+permission_update site/
 echo -e "File permissions updated ... ${GREEN}done${RESET}"
 
 
@@ -547,9 +543,7 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 
 
 		# Update .git permissions
-		#sudo chmod -R a=rwx .git
-		find .git -type d -exec chmod a+rwx {} \; # Make folders traversable and read/write
-		find .git -type f -exec chmod a+rw {} \;  # Make files read/write
+		permission_update .git
 		echo -e "Update permissions ... ${GREEN}done${RESET}"
 	)
 
@@ -560,9 +554,8 @@ fi
 
 
 # Fix the permissions
-echo "Fixing the server permissions..."
-docker-compose exec wp chmod a=rwx /var/www/html/wp-content/
-echo -e "Server permissions fixed ... ${GREEN}done${RESET}"
+server_permission_update /var/www/html/wp-content/
+echo -e "Server file permissions fixed ... ${GREEN}done${RESET}"
 
 
 
