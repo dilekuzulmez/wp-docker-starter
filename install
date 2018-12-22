@@ -215,7 +215,7 @@ if [[ ! -f .env ]]; then
 
 
 		read -ep "Plugins that needs to be installed (${PLUGINS}): " plugins
-		[[ ! -z "$plugins" ]] && PLUGINS=$plugins || echo "Using '${PLUGINS}'"
+		[[ ! -z "$plugins" ]] && NEW_PLUGINS=$plugins || echo "Using '${PLUGINS}'"
 
 
 		# Ask for the admin info
@@ -308,7 +308,7 @@ if [[ $confirm == yes ]] || [[ $confirm == y ]]; then
 	sed -i "" "s/Site Name/$NAME/g" .env;
 	sed -i "" "s/Site tagline/$DESC/g" .env;
 	sed -i "" "s/PREFIX=sitename/PREFIX=$PREFIX/g" .env;
-	sed -i "" "s/custom-codes responsivity simplest-under-construction admin-menu-restriction duplicator wp-mail-logging google-analytics-for-wordpress fast-velocity-minify invisible-recaptcha/$PLUGINS/g" .env;
+	sed -i "" "s/$PLUGINS/$NEW_PLUGINS/g" .env;
 
 	sed -i "" "s/DEVELOPER_USERNAME=Username/DEVELOPER_USERNAME=$DEVELOPER_USERNAME/g" .env;
 	sed -i "" "s/DEVELOPER_NAME=Name/DEVELOPER_NAME=$DEVELOPER_NAME/g" .env;
