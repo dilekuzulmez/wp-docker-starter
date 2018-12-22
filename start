@@ -98,11 +98,13 @@ else
 	# Server permission update
 	# server_permission_update /var/www/html/wp-content/
 
-
-	# Local file permission update
-	permission_update site/wp-content/
-
 fi
+
+
+
+
+# Local file permission update
+permission_update site/wp-content/
 
 
 
