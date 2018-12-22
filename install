@@ -272,7 +272,7 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	echo "Website Name: $NAME"
 	echo "Website Tagline: $DESC"
 	[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
-	echo "Plugins: $PLUGINS"
+	echo "Plugins: $NEW_PLUGINS"
 	echo ""
 
 	if [[ $DEVELOPER_EMAIL != webdesign@twelve12.com ]]; then
