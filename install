@@ -396,7 +396,7 @@ if [[ $MODE == install-starter ]]; then
 
 
 	# Update the permissions
-	permission_update site/wp-content/themes/${SLUG}/
+	# permission_update site/wp-content/themes/${SLUG}/
 
 
 	# Theme function prefix changes
@@ -436,7 +436,7 @@ killall -HUP mDNSResponder
 
 
 # Check MySQL to be ready
-while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
+while ! docker-compose exec db mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
 	echo "Waiting for database connection..."
 	sleep 3
 done
@@ -503,10 +503,18 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 
 
 
+
+		read -ep "Repo Name ($SLUG): " reponame
+		if [[ -z "$reponame" ]]; then
+			reponame=$SLUG
+			echo "Using '$reponame'"
+		fi
+
+
 		read -ep "Username (Twelve12com): " username
 		if [[ -z "$username" ]]; then
-		username=Twelve12com
-		echo "Using '$username'"
+			username=Twelve12com
+			echo "Using '$username'"
 		fi
 
 
@@ -514,11 +522,45 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 		read -s password  # -s flag hides password text
 
 
-		read -ep "Repo Name ($SLUG): " reponame
-		if [[ -z "$reponame" ]]; then
-		reponame=$SLUG
-		echo "Using '$reponame'"
+		# Confirm the information
+		echo ""
+		echo ""
+		echo "== Site Info ===================="
+		echo ""
+		echo "Git Repo Name: $reponame"
+		echo "Git Username: $username"
+		echo "Git Password: *********"
+		echo ""
+		echo "================================="
+		echo ""
+		echo ""
+
+
+		read -ep "Are these information correct? (yes | retype)" gitconfirm
+		if [[ $gitconfirm == retype ]]; then
+
+
+			read -ep "Repo Name ($SLUG): " reponame
+			if [[ -z "$reponame" ]]; then
+				reponame=$SLUG
+				echo "Using '$reponame'"
+			fi
+
+
+			read -ep "Username (Twelve12com): " username
+			if [[ -z "$username" ]]; then
+				username=Twelve12com
+				echo "Using '$username'"
+			fi
+
+
+			echo 'Password:'
+			read -s password  # -s flag hides password text
+
+
 		fi
+
+
 
 
 		# Create a private repo

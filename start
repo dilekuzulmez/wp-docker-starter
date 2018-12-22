@@ -40,8 +40,6 @@ DB_FILE=site/database/dump/wordpress_data.sql
 DB_SUM1=$(md5 -r $DB_FILE)
 
 
-
-
 # Pulling latest changes from git
 (
 	cd site/
@@ -49,8 +47,6 @@ DB_SUM1=$(md5 -r $DB_FILE)
 	git pull
 	echo -e "Git pull complete ... ${GREEN}done${RESET}"
 )
-
-
 
 
 # DETECT DB CHANGES
@@ -63,6 +59,7 @@ if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 	echo "Closing server..."
 	docker-compose down
 	echo -e "Server is down ... ${GREEN}done${RESET}"
+
 
 	echo "Old data removing..."
 	rm -rf site/database/mysql/
@@ -79,7 +76,7 @@ if [[ $DB_SUM1 != $DB_SUM2 ]]; then
 
 
 	# Check MySQL to be ready
-	while ! docker exec ${PREFIX}_mysql mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
+	while ! docker-compose exec db mysqladmin --user=root --password=password --host "${IP}" ping --silent &> /dev/null ; do
 		echo "Waiting for database connection..."
 		sleep 3
 	done
@@ -99,7 +96,7 @@ else
 
 
 	# Server permission update
-	server_permission_update /var/www/html/wp-content/
+	# server_permission_update /var/www/html/wp-content/
 
 
 	# Local file permission update
