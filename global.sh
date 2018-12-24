@@ -18,7 +18,7 @@ function self_update () {
 function server_permission_update () {
 
 	echo "Fixing the server file permissions in ($1)..."
-	#docker-compose exec wp chown -R www-data:www-data $1
+	docker-compose exec wp chown -R www-data:www-data $1
 	# docker-compose exec wp chmod -R a=rwx $1
 	docker-compose exec wp find $1 -type d ! \( -path '*/node_modules/*' -or -path '*/.git/*' -or -name 'node_modules' -or -name '.git' \) -exec chmod 755 {} \;
 	docker-compose exec wp find $1 -type f ! \( -path '*/node_modules/*' -or -path '*/.git/*' -or -name 'node_modules' -or -name '.git' \) -exec chmod 644 {} \;
