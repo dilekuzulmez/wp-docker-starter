@@ -37,3 +37,13 @@ function permission_update () {
 	echo -e "File permissions fixed ... ${GREEN}done${RESET}"
 
 }
+
+function git_permission_update () {
+
+	echo "Fixing the git permissions in ($1)..."
+	# cd /path/to/repo.git
+	sudo chmod -R g+rwX $1
+	find $1 -type d -exec chmod g+s '{}' +
+	echo -e "Git permissions fixed ... ${GREEN}done${RESET}"
+
+}
