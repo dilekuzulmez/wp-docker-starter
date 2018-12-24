@@ -214,7 +214,7 @@ if [[ ! -f .env ]]; then
 		fi
 
 
-		read -ep "Plugins that needs to be installed (${PLUGINS}): " plugins
+		read -ep "Plugins that need to be installed (${PLUGINS}): " plugins
 		[[ ! -z "$plugins" ]] && NEW_PLUGINS=$plugins || echo "Using '${PLUGINS}'"
 
 
