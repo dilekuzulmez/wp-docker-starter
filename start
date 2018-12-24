@@ -98,7 +98,7 @@ fi
 
 
 # Server permission update
-# server_permission_update /var/www/html/wp-content/
+server_permission_update /var/www/html/wp-content/
 
 
 # Local file permission update
