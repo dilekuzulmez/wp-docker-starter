@@ -6,7 +6,8 @@ Wordpress development environment with Docker. Template is being developed with 
 
 ### Clonning
 ```bash
-git clone https://github.com/bilaltas/wp-docker-starter.git project-name && cd project-name
+git clone https://github.com/bilaltas/wp-docker-starter.git project-name
+cd project-name
 ```
 
 Then, it has four types of using:
