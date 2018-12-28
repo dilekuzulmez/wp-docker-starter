@@ -103,6 +103,21 @@ fi
 
 
 
+# PRINT THE SITE INFO
+echo ""
+echo ""
+echo "== Site Info ===================="
+echo ""
+echo "Admin Page: http://${DOMAIN}"
+echo "IP: ${IP}"
+echo ""
+echo "================================="
+echo ""
+echo ""
+
+
+
+
 # If Gulp file and package.json exist in theme folder
 if [[ -f site/wp-content/themes/${SLUG}/gulpfile.js ]] && [[ -f site/wp-content/themes/${SLUG}/package.json ]]; then
 
