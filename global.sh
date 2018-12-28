@@ -27,11 +27,11 @@ if [[ "$status" != "0" ]]; then
 
     done
 
-    echo "${GREEN}Docker connected${RESET}"
+    echo -e "${GREEN}Docker connected${RESET}"
 
 else
 
-	echo "${GREEN}Docker is running${RESET}"
+	echo -e "${GREEN}Docker is running${RESET}"
 
 fi
 
