@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+rep=$(docker ps -q &>/dev/null)
+status=$?
+
+
+if [[ "$status" != "0" ]]; then
+    
+    echo 'Docker is opening...'
+    open /Applications/Docker.app
+
+
+    while [[ "$status" != "0" ]]; do
+
+        echo 'Docker is starting...'
+        sleep 3
+
+        rep=$(docker ps -q &>/dev/null)
+        status=$?
+
+    done
+
+    echo 'Docker connected.'
+
+else
+
+    echo 'Docker is running.'
+
+fi
+

@@ -6,6 +6,38 @@ RESET='\033[0m' # No Color
 
 
 
+# CHECK DOCKER WHETHER OR NOT RUNNING
+rep=$(docker ps -q &>/dev/null)
+status=$?
+
+
+if [[ "$status" != "0" ]]; then
+    
+    echo 'Docker is opening...'
+    open /Applications/Docker.app
+
+
+    while [[ "$status" != "0" ]]; do
+
+        echo 'Docker is starting...'
+        sleep 3
+
+        rep=$(docker ps -q &>/dev/null)
+        status=$?
+
+    done
+
+    echo "${GREEN}Docker connected${RESET}"
+
+else
+
+	echo "${GREEN}Docker is running${RESET}"
+
+fi
+
+
+
+
 function self_update () {
 
 	# Builder updates
