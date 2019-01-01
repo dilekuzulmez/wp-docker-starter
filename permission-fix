@@ -2,6 +2,9 @@
 source global.sh
 
 
+# Git permissions update
+git_permission_update site/.git
+
 
 # Server permission update
 server_permission_update /var/www/html/wp-content/
