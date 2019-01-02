@@ -41,8 +41,16 @@ source .env
 	read -ep "Commit Message: " COMMIT_MESSAGE
 	if [[ -z "$COMMIT_MESSAGE" ]]; then
 
-		bash push
-		exit
+		read -ep "Commit Message: " COMMIT_MESSAGE
+		if [[ -z "$COMMIT_MESSAGE" ]]; then
+
+			read -ep "Commit Message: " COMMIT_MESSAGE
+
+		else
+
+			exit
+
+		fi
 
 	fi
 
