@@ -1,4 +1,5 @@
 site/*
+!site/start
 !.gitkeep
 !.gitignore
 .env
