@@ -518,21 +518,21 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 
 
 
-		read -ep "Repo Name ($SLUG): " reponame
+		read -ep "Bitbucket Repo Name ($SLUG): " reponame
 		if [[ -z "$reponame" ]]; then
 			reponame=$SLUG
 			echo "Using '$reponame'"
 		fi
 
 
-		read -ep "Username (Twelve12com): " username
+		read -ep "Bitbucket Username (Twelve12com): " username
 		if [[ -z "$username" ]]; then
 			username=Twelve12com
 			echo "Using '$username'"
 		fi
 
 
-		echo 'Password:'
+		echo 'Bitbucket Password:'
 		read -s password  # -s flag hides password text
 
 
@@ -541,9 +541,9 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 		echo ""
 		echo "== Site Info ===================="
 		echo ""
-		echo "Git Repo Name: $reponame"
-		echo "Git Username: $username"
-		echo "Git Password: *********"
+		echo "Bitbucket Repo Name: $reponame"
+		echo "Bitbucket Username: $username"
+		echo "Bitbucket Password: *********"
 		echo ""
 		echo "================================="
 		echo ""
@@ -554,21 +554,21 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 		if [[ $gitconfirm == retype ]]; then
 
 
-			read -ep "Repo Name ($SLUG): " reponame
+			read -ep "Bitbucket Repo Name ($SLUG): " reponame
 			if [[ -z "$reponame" ]]; then
 				reponame=$SLUG
 				echo "Using '$reponame'"
 			fi
 
 
-			read -ep "Username (Twelve12com): " username
+			read -ep "Bitbucket Username (Twelve12com): " username
 			if [[ -z "$username" ]]; then
 				username=Twelve12com
 				echo "Using '$username'"
 			fi
 
 
-			echo 'Password:'
+			echo 'Bitbucket Password:'
 			read -s password  # -s flag hides password text
 
 
