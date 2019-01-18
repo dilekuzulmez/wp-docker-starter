@@ -191,8 +191,11 @@ if [[ ! -f .env ]]; then
 	if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; then
 
 
-		read -ep "Active theme folder name (${SLUG}): " slug
+		read -ep "Project Name (${SLUG}): " slug
 		[[ ! -z "$slug" ]] && SLUG=$slug || echo "Using '${SLUG}'"
+
+		# Update the root folder name
+		mv ../wp-docker-starter/ ../$SLUG
 
 
 		read -ep "Website Name (${NAME}): " name
@@ -215,7 +218,7 @@ if [[ ! -f .env ]]; then
 
 
 		read -ep "Plugins that need to be installed (${PLUGINS}): " plugins
-		[[ ! -z "$plugins" ]] && NEW_PLUGINS=$plugins || echo "Using '${PLUGINS}'"
+		[[ ! -z "$plugins" ]] && NEW_PLUGINS=$plugins || ( NEW_PLUGINS=$PLUGINS && echo "Using '${PLUGINS}'")
 
 
 		# Ask for the admin info

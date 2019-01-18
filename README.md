@@ -5,13 +5,9 @@ Wordpress development environment with Docker. Template is being developed with 
 ## Usage & Preparation
 
 ### Clonning
-Update the "project-name" and clone the builder with the code below:
+Clone the builder with the code below:
 ```bash
-git clone https://github.com/bilaltas/wp-docker-starter.git project-name
-```
-And, open the directory:
-```bash
-cd project-name
+git clone https://github.com/bilaltas/wp-docker-starter.git && cd wp-docker-starter
 ```
 
 Then, it has four types of using:
