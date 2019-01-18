@@ -194,9 +194,6 @@ if [[ ! -f .env ]]; then
 		read -ep "Project Name (${SLUG}): " slug
 		[[ ! -z "$slug" ]] && SLUG=$slug || echo "Using '${SLUG}'"
 
-		# Update the root folder name
-		mv ../wp-docker-starter/ ../$SLUG
-
 
 		read -ep "Website Name (${NAME}): " name
 		[[ ! -z "$name" ]] && NAME=$name || echo "Using '${NAME}'"
@@ -218,7 +215,16 @@ if [[ ! -f .env ]]; then
 
 
 		read -ep "Plugins that need to be installed (${PLUGINS}): " plugins
-		[[ ! -z "$plugins" ]] && NEW_PLUGINS=$plugins || ( NEW_PLUGINS=$PLUGINS && echo "Using '${PLUGINS}'")
+		if [[ ! -z "$plugins" ]]; then
+
+			NEW_PLUGINS=$plugins
+
+		else
+
+			NEW_PLUGINS=$PLUGINS
+			echo "Using '${NEW_PLUGINS}'"
+
+		fi
 
 
 		# Ask for the admin info
@@ -275,7 +281,7 @@ if [[ $MODE == install-starter ]] || [[ $MODE == install-different-theme ]]; the
 	echo "Website Name: $NAME"
 	echo "Website Tagline: $DESC"
 	[[ $MODE == install-starter ]] && echo "Function Prefixes: $PREFIX" || sleep 0
-	echo "Plugins: $NEW_PLUGINS"
+	[[ ! -z "$plugins" ]] && echo "Plugins: $NEW_PLUGINS" || echo "Plugins: $PLUGINS"
 	echo ""
 
 	if [[ $DEVELOPER_EMAIL != webdesign@twelve12.com ]]; then
@@ -298,6 +304,11 @@ read -ep "Are these correct? (type 'yes' to confirm): " confirm
 
 # CHANGE THE FILE IF YES
 if [[ $confirm == yes ]] || [[ $confirm == y ]]; then
+
+
+	# Update the root folder name
+	mv ../wp-docker-starter/ ../$SLUG
+
 
 	# Create the .env file
 	cp local.env .env
