@@ -5,14 +5,18 @@ Wordpress development environment with Docker. Template is being developed with 
 ## Usage & Preparation
 
 ### Clonning
+Update the "project-name" and clone the builder with the code below:
 ```bash
 git clone https://github.com/bilaltas/wp-docker-starter.git project-name
+```
+And, open the directory:
+```bash
 cd project-name
 ```
 
 Then, it has four types of using:
 1. Installing Wordpress with my empty starter template (Default)
-	* Nothing to do, just start installation
+	* Nothing to do, just start installation (sudo bash install)
 2. Installing Wordpress with your own theme
 	* Put your theme folder(s) to "site/wp-content/themes/" folder
 	* Start installation and don't forget to type your theme folder name to activate on WP, when it asks for "Active theme folder name"
