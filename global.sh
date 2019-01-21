@@ -43,6 +43,8 @@ function self_update () {
 	# Builder updates
 	echo "Updating the builder..."
 	git pull
+	git reset --hard
+	git pull
 	echo -e "Builder update complete ... ${GREEN}done${RESET}"
 
 }
